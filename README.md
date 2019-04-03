@@ -4,6 +4,12 @@
 
 LICENSE: [AGPL 3.0](LICENSE)
 
+## 魔改造アリ
+
+Cutlsが勝手にいじったもの[Quesdon(toot.app)](https://quesdon.toot.app)
+
+* DMで質問の通知が来る。`TOOT_ORIGIN`にインスタンス名を、`TOOT_TOKEN`にアクセストークンを渡して起動する。オプトアウト方法等はない(アカウントをミュートしたら終わり)。
+
 ## how to run
 
 required: latest version Node.js, MongoDB
