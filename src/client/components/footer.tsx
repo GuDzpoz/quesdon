@@ -9,8 +9,6 @@ export class Footer extends React.Component {
             (<a href={`${upstreamUrl}/commits/${gitVersion}`}>{gitVersion.slice(0, 7)}</a>)</p>
             <p>
                 公式アカウント: <a href="https://mstdn.rinsuki.net/@quesdon">@quesdon@mstdn.rinsuki.net</a>
-                &nbsp;
-                <Link to="/@quesdon@mstdn.rinsuki.net">公式Quesdon (要望や不具合報告もこちらへどうぞ)</Link>
             </p>
             <p>開発者: <a href="https://mstdn.rinsuki.net/@rinsuki">@rinsuki@mstdn.rinsuki.net</a></p>
             <p>このサーバーは<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P</a>が管理しています。</p>
