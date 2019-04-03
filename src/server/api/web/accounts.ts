@@ -5,7 +5,7 @@ import fetch from "node-fetch"
 import * as parseLinkHeader from "parse-link-header"
 import { Link, Links } from "parse-link-header"
 import { QUESTION_TEXT_MAX_LENGTH } from "../../../common/const"
-import { BASE_URL, PUSHBULLET_CLIENT_ID, PUSHBULLET_CLIENT_SECRET } from "../../config"
+import { BASE_URL, PUSHBULLET_CLIENT_ID, PUSHBULLET_CLIENT_SECRET, TOOT_ORIGIN, TOOT_TOKEN } from "../../config"
 import { Question, User } from "../../db/index"
 import { questionLogger } from "../../utils/questionLog"
 
@@ -161,6 +161,17 @@ router.post("/:acct/question", async (ctx) => {
             },
         })
     }
+    fetch("https://" + TOOT_ORIGIN + "/api/v1/statuses", {
+        method: "POST",
+        body: JSON.stringify({
+            visibility: "direct",
+            status: user.acctLower+" 新しい質問です\n" + BASE_URL + "/my/questions\nこの通知が不要の際はこのアカウントをミュートしてください。",
+        }),
+        headers: {
+            "Authorization": "Bearer " + TOOT_TOKEN,
+            "Content-Type": "application/json",
+        },
+    })
 })
 
 const getAnswers = async (ctx: Koa.Context) => {
