@@ -13,6 +13,7 @@ export class Footer extends React.Component {
                 <Link to="/@quesdon@mstdn.rinsuki.net">公式Quesdon (要望や不具合報告もこちらへどうぞ)</Link>
             </p>
             <p>開発者: <a href="https://mstdn.rinsuki.net/@rinsuki">@rinsuki@mstdn.rinsuki.net</a></p>
+            <p>このサーバーは<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P</a>が管理しています。</p>
             <p>
                 {usingDarkTheme
                 ?   <a href="#" onClick={this.leaveDarkTheme.bind(this)}>ダークテーマから戻す</a>
