@@ -165,7 +165,7 @@ router.post("/:acct/question", async (ctx) => {
         method: "POST",
         body: JSON.stringify({
             visibility: "direct",
-            status: user.acctLower+" 新しい質問です\n" + BASE_URL + "/my/questions\nこの通知が不要の際はこのアカウントをミュートしてください。",
+            status: "@"+user.acctLower+" 新しい質問です\n" + BASE_URL + "/my/questions\nこの通知が不要の際はこのアカウントをミュートしてください。",
         }),
         headers: {
             "Authorization": "Bearer " + TOOT_TOKEN,
