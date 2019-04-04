@@ -20,7 +20,7 @@ export class Header extends React.Component<{}, State> {
     }
     render() {
         return <Navbar light expand="md" color="light"><Container>
-            <NavbarBrand to="/">Quesdon</NavbarBrand>
+            <NavbarBrand to="/">Quesdon(toot.app)</NavbarBrand>
             <NavbarToggler onClick={this.toggle.bind(this)} />
             <Collapse navbar isOpen={this.state.isOpen}>
                 <Nav className="mr-auto" navbar>
@@ -28,6 +28,9 @@ export class Header extends React.Component<{}, State> {
                         {me
                         ? <NavLink to="/my">@{me.acctDisplay}<QuestionRemaining/></NavLink>
                         : <NavLink to="/login">ログイン</NavLink>}
+                    </NavItem>
+                    <NavItem>
+                        質問されたら通知が来る令和時代のマストドン質問箱
                     </NavItem>
                 </Nav>
             </Collapse>

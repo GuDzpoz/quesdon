@@ -36,7 +36,7 @@ export class PageMySettings extends React.Component<{}, State> {
                 <FormGroup>
                     <label>ちょっとした説明</label>
                     <Input type="textarea" name="description"
-                        placeholder="しぶやのりんさんがすき"
+                        placeholder="さくままゆ逆から読んでもさくままゆ"
                         onInput={this.inputDescription.bind(this)}
                         defaultValue={me.description}/>
                     <FormText>あと{this.descriptionRemaining()}文字 改行は表示時に反映されません</FormText>
