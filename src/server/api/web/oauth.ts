@@ -34,7 +34,8 @@ router.post("/get_url", async (ctx) => {
                         "following-read",
                         "note-read",
                         "note-write",
-                    ]
+                    ],
+                    callbackUrl:redirectUri
                 }),
                 headers: {"Content-Type": "application/json"},
             }).then((r) => r.json())
@@ -90,7 +91,8 @@ router.post("/get_url", async (ctx) => {
                         "following-read",
                         "note-read",
                         "note-write",
-                    ]
+                    ],
+                    callbackUrl:redirectUri
                 }),
                 headers: {"Content-Type": "application/json"},
             }).then((r) => r.json())
