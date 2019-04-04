@@ -19,7 +19,6 @@ router.get("/verify_credentials", async (ctx) => {
 })
 
 router.get("/followers", async (ctx) => {
-    if (null == /^\d+$/.exec(ctx.query.max_id || "0")) return ctx.throw("max_id is num only", 400)
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const user = await User.findById(ctx.session!.user)
     if (!user) return ctx.throw("not found", 404)
@@ -33,8 +32,9 @@ router.get("/followers", async (ctx) => {
         var body={
             username:user!.acct.split("@")[0],
             host:user!.acct.split("@")[1],
-            cursor:null,
-            i:at.split("_")[1]
+            cursor:"",
+            i:at.split("_")[1],
+            limit:100
         }
         if(ctx.query.max_id){
             body.cursor=ctx.query.max_id
@@ -54,6 +54,7 @@ router.get("/followers", async (ctx) => {
             .map((acct) => acct.toLowerCase())
         max_id =followersRes.next;
     }else{
+        if (null == /^\d+$/.exec(ctx.query.max_id || "0")) return ctx.throw("max_id is num only", 400)
         const instanceUrl = "https://" + user!.acct.split("@")[1]
         const myInfo = await fetch(instanceUrl + "/api/v1/accounts/verify_credentials", {
             headers: {
