@@ -20,6 +20,8 @@ router.post("/get_url", async (ctx) => {
     var secret = null;
     if(!isMisskey){
         var app = await MastodonApp.findOne({hostName, appBaseUrl: BASE_URL, redirectUri})
+    }else{
+        var app=null;
     }
     if (!app && !isMisskey) {
         const res = await fetch("https://" + hostName + "/api/v1/apps", {
