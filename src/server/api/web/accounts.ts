@@ -31,7 +31,6 @@ router.get("/followers", async (ctx) => {
         const instanceUrl = "https://" + user!.acct.split("@")[1]
         var body=JSON.stringify({
             username:user!.acct.split("@")[0],
-            host:user!.acct.split("@")[1],
             i:at.split("_")[1],
             limit:100
         });
