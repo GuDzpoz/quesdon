@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Alert, Button, FormGroup, Input } from "reactstrap"
+import { Alert, Button, FormGroup, Input, Label} from "reactstrap"
 import { apiFetch } from "../../api-fetch"
 import majorInstances from "../../major-instances"
 import { Title } from "../common/title"
@@ -28,6 +28,12 @@ export class PageLogin extends React.Component<{}, State> {
                     <datalist id="major-instances">
                         {majorInstances.map((instance) => <option value={instance} />)}
                     </datalist>
+                </FormGroup>
+                <FormGroup check>
+                <Label check>
+                    <Input type="checkbox" name="misskey"　/>{' '}
+                    開発者モード
+                </Label>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={loading}>{ loading ? "読み込み中" : "ログイン" }</Button>
             </form>
