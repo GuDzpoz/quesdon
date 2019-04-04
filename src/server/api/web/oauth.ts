@@ -71,6 +71,7 @@ router.post("/get_url", async (ctx) => {
         app.hostName = hostName
         app.appBaseUrl = BASE_URL
         app.redirectUri = redirectUri
+        await app.save()
     }
     ctx.session!.loginState = rndstr() + "_" + app.id
     if(!isMisskey){
