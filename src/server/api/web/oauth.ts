@@ -19,59 +19,60 @@ router.post("/get_url", async (ctx) => {
     }
     var secret = null;
     var app = await MastodonApp.findOne({hostName, appBaseUrl: BASE_URL, redirectUri})
-    if (!app && !isMisskey) {
-        const res = await fetch("https://" + hostName + "/api/v1/apps", {
-            method: "POST",
-            body: JSON.stringify({
-                client_name: "Quesdon(toot.app)",
-                redirect_uris: redirectUri,
-                scopes: "read write",
-                website: BASE_URL,
-            }),
-            headers: {"Content-Type": "application/json"},
-        }).then((r) => r.json())
-        app = new MastodonApp()
-        app.clientId = res.client_id
-        app.clientSecret = res.client_secret
-        app.hostName = hostName
-        app.appBaseUrl = BASE_URL
-        app.redirectUri = redirectUri
-        await app.save()
-    }
-    if(isMisskey) {
-        const createApp = await fetch("https://" + hostName + "/api/app/create", {
-            method: "POST",
-            body: JSON.stringify({
-                name: "Quesdon(toot.app)",
-			    description: "",
-			    permission: [
-				    "account-read",
-				    "account-write",
-				    "account/read",
-				    "account/write",
-				    "following-read",
-				    "note-read",
-				    "note-write",
-			    ]
-            }),
-            headers: {"Content-Type": "application/json"},
-        }).then((r) => r.json())
-        secret = createApp.secret
-        const res = await fetch("https://" + hostName + "/api/auth/session/generate", {
-            method: "POST",
-            body: JSON.stringify({
-                appSecret: secret
-            }),
-            headers: {"Content-Type": "application/json"},
-        }).then((r) => r.json())
-        var login=res.url;
-        app = new MastodonApp()
-        app.clientId = res.token
-        app.clientSecret = secret
-        app.hostName = hostName
-        app.appBaseUrl = BASE_URL
-        app.redirectUri = redirectUri
-        await app.save()
+    if (!app) {
+        if(isMisskey) {
+            const createApp = await fetch("https://" + hostName + "/api/app/create", {
+                method: "POST",
+                body: JSON.stringify({
+                    name: "Quesdon(toot.app)",
+                    description: "",
+                    permission: [
+                        "account-read",
+                        "account-write",
+                        "account/read",
+                        "account/write",
+                        "following-read",
+                        "note-read",
+                        "note-write",
+                    ]
+                }),
+                headers: {"Content-Type": "application/json"},
+            }).then((r) => r.json())
+            secret = createApp.secret
+            const res = await fetch("https://" + hostName + "/api/auth/session/generate", {
+                method: "POST",
+                body: JSON.stringify({
+                    appSecret: secret
+                }),
+                headers: {"Content-Type": "application/json"},
+            }).then((r) => r.json())
+            var login=res.url;
+            app = new MastodonApp()
+            app.clientId = res.token
+            app.clientSecret = secret
+            app.hostName = hostName
+            app.appBaseUrl = BASE_URL
+            app.redirectUri = redirectUri
+            await app.save()
+        }else{
+            const res = await fetch("https://" + hostName + "/api/v1/apps", {
+                method: "POST",
+                body: JSON.stringify({
+                    client_name: "Quesdon(toot.app)",
+                    redirect_uris: redirectUri,
+                    scopes: "read write",
+                    website: BASE_URL,
+                }),
+                headers: {"Content-Type": "application/json"},
+            }).then((r) => r.json())
+            app = new MastodonApp()
+            app.clientId = res.client_id
+            app.clientSecret = res.client_secret
+            app.hostName = hostName
+            app.appBaseUrl = BASE_URL
+            app.redirectUri = redirectUri
+            await app.save()
+        }
     }
     ctx.session!.loginState = rndstr() + "_" + app.id
     if(!isMisskey){
