@@ -60,3 +60,7 @@ main {
 details {
     margin-bottom: 1em; 
 }
+.nav-link{
+    padding:0 !important;
+    padding-right: 0.5rem !important;
+}

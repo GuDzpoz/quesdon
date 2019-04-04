@@ -30,7 +30,7 @@ export class Header extends React.Component<{}, State> {
                         : <NavLink to="/login">ログイン</NavLink>}
                     </NavItem>
                     <NavItem>
-                        質問されたら通知が来る令和時代のマストドン質問箱
+                        質問されたら通知が来る令和時代の質問箱
                     </NavItem>
                 </Nav>
             </Collapse>

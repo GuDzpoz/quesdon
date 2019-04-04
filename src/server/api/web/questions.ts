@@ -80,14 +80,40 @@ router.post("/:id/answer", async (ctx) => {
         body.status = "Q. " + question.question + "\n" + body.status
         body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
     }
-    fetch("https://" + user!.acct.split("@")[1] + "/api/v1/statuses", {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-            "Authorization": "Bearer " + user!.accessToken,
-            "Content-Type": "application/json",
-        },
-    })
+    var at=user!.accessToken;
+    if(~at.indexOf("misskey_")){
+        var vis=null;
+        if(body.visibility=="public"){
+            vis="public";
+        }else if(body.visibility=="unlisted"){
+            vis="home";
+        }else  if(body.visibility=="unlisted"){
+            vis="followers";
+        }else{
+            vis="public";
+        }
+        fetch("https://" + user!.acct.split("@")[1] + "/api/notes/create", {
+            method: "POST",
+            body: JSON.stringify({
+                i:at.split("_")[1],
+                text:body.status,
+                cw:body.spoiler_text,
+                visibility:vis
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+    }else{
+        fetch("https://" + user!.acct.split("@")[1] + "/api/v1/statuses", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Authorization": "Bearer " + user!.accessToken,
+                "Content-Type": "application/json",
+            },
+        })
+    }
     // logging
     await questionLogger(ctx, question, "answer")
 })
