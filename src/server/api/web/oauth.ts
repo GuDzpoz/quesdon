@@ -37,7 +37,8 @@ router.post("/get_url", async (ctx) => {
         app.appBaseUrl = BASE_URL
         app.redirectUri = redirectUri
         await app.save()
-    }else if(isMisskey) {
+    }
+    if(isMisskey) {
         const createApp = await fetch("https://" + hostName + "/api/app/create", {
             method: "POST",
             body: JSON.stringify({
