@@ -153,7 +153,7 @@ router.get("/redirect", async (ctx) => {
         return
     }
     if(ctx.query.token){
-        const res = await fetch("https://" + app.hostName + "auth/session/userkey", {
+        const res = await fetch("https://" + app.hostName + "/auth/session/userkey", {
             method: "POST",
             body: JSON.stringify({
                 appSecret:app.clientSecret,
