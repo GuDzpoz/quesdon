@@ -121,7 +121,7 @@ router.get("/redirect", async (ctx) => {
         }).then((r) => r.json())
         const myProfile=res.user;
         const sha256 = crypto.createHash('sha256');
-		sha256.update(res.accessToken + app.secret);
+		sha256.update(res.accessToken + app.clientSecret);
 		const hash = sha256.digest('hex');
         profile = {
             id: myProfile.id,
