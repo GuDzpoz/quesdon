@@ -126,7 +126,7 @@ router.post("/get_url", async (ctx) => {
         }
         url = `https://${app.hostName}/oauth/authorize?${Object.entries(params).map((v) => v.join("=")).join("&")}`
     }else{
-        url=login+"?token="+token+"&state=misskey_"+app.id
+        url=login+"?token="+token
     }
     ctx.body = {
         url,
@@ -152,7 +152,7 @@ router.get("/redirect", async (ctx) => {
         ctx.redirect("/login?error=app_notfound")
         return
     }
-    if(ctx.query.state.split("_")[0]=="misskey"){
+    if(ctx.query.token){
         const res = await fetch("https://" + app.hostName + "auth/session/userkey", {
             method: "POST",
             body: JSON.stringify({
