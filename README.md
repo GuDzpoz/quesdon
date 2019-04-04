@@ -9,6 +9,7 @@ LICENSE: [AGPL 3.0](LICENSE)
 Cutlsが勝手にいじったもの[Quesdon(toot.app)](https://quesdon.toot.app)
 
 * DMで質問の通知が来る。`TOOT_ORIGIN`にインスタンス名を、`TOOT_TOKEN`にアクセストークンを渡して起動する。オプトアウト方法等はない(アカウントをミュートしたら終わり)。
+* Misskeyでログインできる。投稿もできる。
 
 ## how to run
 

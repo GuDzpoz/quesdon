@@ -19,35 +19,62 @@ router.get("/verify_credentials", async (ctx) => {
 })
 
 router.get("/followers", async (ctx) => {
-    if (null == /^\d+$/.exec(ctx.query.max_id || "0")) return ctx.throw("max_id is num only", 400)
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const user = await User.findById(ctx.session!.user)
     if (!user) return ctx.throw("not found", 404)
     if (user.hostName === "twitter.com") {
         return {max_id: undefined, accounts: []}
     }
-    const instanceUrl = "https://" + user!.acct.split("@")[1]
-    const myInfo = await fetch(instanceUrl + "/api/v1/accounts/verify_credentials", {
-        headers: {
-            Authorization: "Bearer " + user!.accessToken,
-        },
-    }).then((r) => r.json())
-    const param = ctx.query.max_id ? "&max_id=" + ctx.query.max_id : ""
-    const followersRes = await fetch(
-        `${instanceUrl}/api/v1/accounts/${myInfo.id}/followers?limit=80${param}`,
-        {
+    var at=user!.accessToken;
+    var max_id ="";
+    if(~at.indexOf("misskey_")){
+        const instanceUrl = "https://" + user!.acct.split("@")[1]
+        var body=JSON.stringify({
+            username:user!.acct.split("@")[0],
+            i:at.split("_")[1],
+            limit:100
+        });
+        if(ctx.query.max_id){
+            var body=JSON.stringify(JSON.parse(body).cursor=ctx.query.max_id)
+        }
+        const followersRes = await fetch(
+            `${instanceUrl}/api/users/followers`,
+            {
+                method: "POST",
+                body: body,
+            },
+        ).then((r) => r.json()) 
+        var followers: any[] = followersRes.users
+        followers = followers
+            .map((follower) => follower.username+"@"+follower.host as string)
+            .map((acct) => acct.includes(".") ? acct : (acct + "@" + user!.acct.split("@")[1]))
+            .map((acct) => acct.toLowerCase())
+        max_id =followersRes.next;
+    }else{
+        if (null == /^\d+$/.exec(ctx.query.max_id || "0")) return ctx.throw("max_id is num only", 400)
+        const instanceUrl = "https://" + user!.acct.split("@")[1]
+        const myInfo = await fetch(instanceUrl + "/api/v1/accounts/verify_credentials", {
             headers: {
                 Authorization: "Bearer " + user!.accessToken,
             },
-        },
-    )
-    var followers: any[] = await followersRes.json()
-    followers = followers
-        .map((follower) => follower.acct as string)
-        .map((acct) => acct.includes("@") ? acct : (acct + "@" + user!.acct.split("@")[1]))
-        .map((acct) => acct.toLowerCase())
+        }).then((r) => r.json())
+        const param = ctx.query.max_id ? "&max_id=" + ctx.query.max_id : ""
+        const followersRes = await fetch(
+            `${instanceUrl}/api/v1/accounts/${myInfo.id}/followers?limit=80${param}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + user!.accessToken,
+                },
+            },
+        )   
+        var followers: any[] = await followersRes.json()
+        followers = followers
+            .map((follower) => follower.acct as string)
+            .map((acct) => acct.includes("@") ? acct : (acct + "@" + user!.acct.split("@")[1]))
+            .map((acct) => acct.toLowerCase())
+        var max_id = ((parseLinkHeader(followersRes.headers.get("Link")!) || {} as Links).next || {} as Link).max_id
+    }
     const followersObject = await User.find({acctLower: {$in: followers}})
-    const max_id = ((parseLinkHeader(followersRes.headers.get("Link")!) || {} as Links).next || {} as Link).max_id
     ctx.body = {
         accounts: followersObject,
         max_id,
