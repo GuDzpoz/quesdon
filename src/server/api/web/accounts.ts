@@ -27,6 +27,7 @@ router.get("/followers", async (ctx) => {
         return {max_id: undefined, accounts: []}
     }
     var at=user!.accessToken;
+    var max_id =null;
     if(~at.indexOf("misskey_")){
         const instanceUrl = "https://" + user!.acct.split("@")[1]
         var body={
@@ -50,6 +51,7 @@ router.get("/followers", async (ctx) => {
             .map((follower) => follower.username+"@"+follower.host as string)
             .map((acct) => acct.includes(".") ? acct : (acct + "@" + user!.acct.split("@")[1]))
             .map((acct) => acct.toLowerCase())
+        max_id =followersRes.next;
     }else{
         const instanceUrl = "https://" + user!.acct.split("@")[1]
         const myInfo = await fetch(instanceUrl + "/api/v1/accounts/verify_credentials", {
@@ -71,9 +73,9 @@ router.get("/followers", async (ctx) => {
             .map((follower) => follower.acct as string)
             .map((acct) => acct.includes("@") ? acct : (acct + "@" + user!.acct.split("@")[1]))
             .map((acct) => acct.toLowerCase())
+        var max_id = ((parseLinkHeader(followersRes.headers.get("Link")!) || {} as Links).next || {} as Link).max_id
     }
     const followersObject = await User.find({acctLower: {$in: followers}})
-    const max_id = ((parseLinkHeader(followersRes.headers.get("Link")!) || {} as Links).next || {} as Link).max_id
     ctx.body = {
         accounts: followersObject,
         max_id,
