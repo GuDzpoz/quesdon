@@ -29,21 +29,20 @@ router.get("/followers", async (ctx) => {
     var max_id ="";
     if(~at.indexOf("misskey_")){
         const instanceUrl = "https://" + user!.acct.split("@")[1]
-        var body={
+        var body=JSON.stringify({
             username:user!.acct.split("@")[0],
             host:user!.acct.split("@")[1],
-            cursor:"",
             i:at.split("_")[1],
             limit:100
-        }
+        });
         if(ctx.query.max_id){
-            body.cursor=ctx.query.max_id
+            var body=JSON.stringify(JSON.parse(body).cursor=ctx.query.max_id)
         }
         const followersRes = await fetch(
             `${instanceUrl}/api/users/followers`,
             {
                 method: "POST",
-                body: JSON.stringify(body),
+                body: body,
             },
         ).then((r) => r.json()) 
         console.log(followersRes)
