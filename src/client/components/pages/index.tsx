@@ -20,12 +20,6 @@ export class PageIndex extends React.Component {
                 <summary>
                 Quesdon(toot.app)だけの限定機能が追加！
                 </summary>
-                自分宛ての新しい質問ができると<a href="https://mstdn.jp/@qtnotf">@qtnotf@mstdn.jp</a>よりDMで通知されます。要らない場合はこのアカウントをミュートしてください。
-            </details>
-            <details>
-                <summary>
-                Quesdon(toot.app)だけの限定機能が追加！
-                </summary>
                 <p>自分宛ての新しい質問ができると<a href="https://mstdn.jp/@qtnotf">@qtnotf@mstdn.jp</a>よりDMで通知されます。要らない場合はこのアカウントをミュートしてください。</p>
                 <p>Misskeyでもログインできます。ログイン時に「Misskeyとしてログイン」にチェック！</p>
             </details>

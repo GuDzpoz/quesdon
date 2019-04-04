@@ -26,26 +26,52 @@ router.get("/followers", async (ctx) => {
     if (user.hostName === "twitter.com") {
         return {max_id: undefined, accounts: []}
     }
-    const instanceUrl = "https://" + user!.acct.split("@")[1]
-    const myInfo = await fetch(instanceUrl + "/api/v1/accounts/verify_credentials", {
-        headers: {
-            Authorization: "Bearer " + user!.accessToken,
-        },
-    }).then((r) => r.json())
-    const param = ctx.query.max_id ? "&max_id=" + ctx.query.max_id : ""
-    const followersRes = await fetch(
-        `${instanceUrl}/api/v1/accounts/${myInfo.id}/followers?limit=80${param}`,
-        {
+    var at=user!.accessToken;
+    if(~at.indexOf("misskey_")){
+        const instanceUrl = "https://" + user!.acct.split("@")[1]
+        var body={
+            username:user!.acct.split("@")[0],
+            host:user!.acct.split("@")[1],
+            cursor:null,
+            i:at.split("_")[1]
+        }
+        if(ctx.query.max_id){
+            body.cursor=ctx.query.max_id
+        }
+        const followersRes = await fetch(
+            `${instanceUrl}/api/users/followers`,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+            },
+        )   
+        var followers: any[] = await followersRes.json().users
+        followers = followers
+            .map((follower) => follower.username+"@"+follower.host as string)
+            .map((acct) => acct.includes(".") ? acct : (acct + "@" + user!.acct.split("@")[1]))
+            .map((acct) => acct.toLowerCase())
+    }else{
+        const instanceUrl = "https://" + user!.acct.split("@")[1]
+        const myInfo = await fetch(instanceUrl + "/api/v1/accounts/verify_credentials", {
             headers: {
                 Authorization: "Bearer " + user!.accessToken,
             },
-        },
-    )
-    var followers: any[] = await followersRes.json()
-    followers = followers
-        .map((follower) => follower.acct as string)
-        .map((acct) => acct.includes("@") ? acct : (acct + "@" + user!.acct.split("@")[1]))
-        .map((acct) => acct.toLowerCase())
+        }).then((r) => r.json())
+        const param = ctx.query.max_id ? "&max_id=" + ctx.query.max_id : ""
+        const followersRes = await fetch(
+            `${instanceUrl}/api/v1/accounts/${myInfo.id}/followers?limit=80${param}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + user!.accessToken,
+                },
+            },
+        )   
+        var followers: any[] = await followersRes.json()
+        followers = followers
+            .map((follower) => follower.acct as string)
+            .map((acct) => acct.includes("@") ? acct : (acct + "@" + user!.acct.split("@")[1]))
+            .map((acct) => acct.toLowerCase())
+    }
     const followersObject = await User.find({acctLower: {$in: followers}})
     const max_id = ((parseLinkHeader(followersRes.headers.get("Link")!) || {} as Links).next || {} as Link).max_id
     ctx.body = {
