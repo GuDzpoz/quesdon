@@ -44,8 +44,8 @@ router.get("/followers", async (ctx) => {
                 method: "POST",
                 body: JSON.stringify(body),
             },
-        )   
-        var followers: any[] = await followersRes.json().users
+        ).then((r) => r.json()) 
+        var followers: any[] = followersRes.users
         followers = followers
             .map((follower) => follower.username+"@"+follower.host as string)
             .map((acct) => acct.includes(".") ? acct : (acct + "@" + user!.acct.split("@")[1]))
