@@ -47,6 +47,7 @@ router.post("/get_url", async (ctx) => {
                 headers: {"Content-Type": "application/json"},
             }).then((r) => r.json())
             var login=res.url;
+            var token=res.token;
             app = new MastodonApp()
             app.clientId = res.token
             app.clientSecret = secret
@@ -73,6 +74,44 @@ router.post("/get_url", async (ctx) => {
             app.redirectUri = redirectUri
             await app.save()
         }
+    }else{
+        if(isMisskey) {
+            app=null;
+            const createApp = await fetch("https://" + hostName + "/api/app/create", {
+                method: "POST",
+                body: JSON.stringify({
+                    name: "Quesdon(toot.app)",
+                    description: "",
+                    permission: [
+                        "account-read",
+                        "account-write",
+                        "account/read",
+                        "account/write",
+                        "following-read",
+                        "note-read",
+                        "note-write",
+                    ]
+                }),
+                headers: {"Content-Type": "application/json"},
+            }).then((r) => r.json())
+            secret = createApp.secret
+            const res = await fetch("https://" + hostName + "/api/auth/session/generate", {
+                method: "POST",
+                body: JSON.stringify({
+                    appSecret: secret
+                }),
+                headers: {"Content-Type": "application/json"},
+            }).then((r) => r.json())
+            var login=res.url;
+            var token=res.token;
+            app = new MastodonApp()
+            app.clientId = res.token
+            app.clientSecret = secret
+            app.hostName = hostName
+            app.appBaseUrl = BASE_URL
+            app.redirectUri = redirectUri
+            await app.save()
+        }
     }
     ctx.session!.loginState = rndstr() + "_" + app.id
     if(!isMisskey){
@@ -85,7 +124,7 @@ router.post("/get_url", async (ctx) => {
         }
         url = `https://${app.hostName}/oauth/authorize?${Object.entries(params).map((v) => v.join("=")).join("&")}`
     }else{
-        url=login+"&state=misskey_"+app.id
+        url=login+"?token="+token+"&state=misskey_"+app.id
     }
     ctx.body = {
         url,
