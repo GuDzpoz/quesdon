@@ -44,7 +44,6 @@ router.get("/followers", async (ctx) => {
                 body: body,
             },
         ).then((r) => r.json()) 
-        console.log(followersRes)
         var followers: any[] = followersRes.users
         followers = followers
             .map((follower) => follower.username+"@"+follower.host as string)
