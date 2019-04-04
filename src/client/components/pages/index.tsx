@@ -8,7 +8,7 @@ export class PageIndex extends React.Component {
         return <div>
             <title>Quesdon(toot.app)</title>
             <h1>Quesdon(toot.app)</h1>
-            <p>ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonアカウントで使えるやつです</p>
+            <p>ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonで使えるやつです。Misskeyにも勝手に対応。</p>
             <p>本家(quesdon.rinsuki.net)が終わってもここはしばらく終わりません。</p>
             <details>
                 <summary>
@@ -21,6 +21,13 @@ export class PageIndex extends React.Component {
                 Quesdon(toot.app)だけの限定機能が追加！
                 </summary>
                 自分宛ての新しい質問ができると<a href="https://mstdn.jp/@qtnotf">@qtnotf@mstdn.jp</a>よりDMで通知されます。要らない場合はこのアカウントをミュートしてください。
+            </details>
+            <details>
+                <summary>
+                Quesdon(toot.app)だけの限定機能が追加！
+                </summary>
+                <p>自分宛ての新しい質問ができると<a href="https://mstdn.jp/@qtnotf">@qtnotf@mstdn.jp</a>よりDMで通知されます。要らない場合はこのアカウントをミュートしてください。</p>
+                <p>Misskeyでもログインできます。ログイン時に「Misskeyとしてログイン」にチェック！</p>
             </details>
             <p>{me ? <Link to="/my">マイページ</Link> : <Link to="/login">ログイン</Link>}</p>
             <PageLatest />

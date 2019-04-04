@@ -21,7 +21,7 @@ export class PageLogin extends React.Component<{}, State> {
         return <div>
             <Title>ログイン</Title>
             <h1>ログイン</h1>
-            <p>あなたのMastodonアカウントがあるインスタンスを入力してください。</p>
+            <p>あなたのMastodon/Misskeyアカウントがあるインスタンスを入力してください。</p>
             <form action="javascript://" onSubmit={this.send.bind(this)}>
                 <FormGroup>
                     <Input name="instance" placeholder="kirishima.cloud" list="major-instances"/>
@@ -32,7 +32,7 @@ export class PageLogin extends React.Component<{}, State> {
                 <FormGroup check>
                 <Label check>
                     <Input type="checkbox" name="misskey"　/>{' '}
-                    開発者モード
+                    Misskeyとしてログイン
                 </Label>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={loading}>{ loading ? "読み込み中" : "ログイン" }</Button>
