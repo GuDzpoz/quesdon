@@ -43,7 +43,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
                     <a href={user.url || `https://${user.hostName}/@${user.acct.split("@")[0]}`}
                         rel="nofollow me">
-                        プロフィールをチェック
+                        プロフィールをチェックしよう
                     </a>
                 </p>
                 <p>{user.description}</p>
