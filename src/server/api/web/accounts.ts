@@ -211,9 +211,9 @@ router.post("/:acct/import", async (ctx) => {
         questionString=questionStringArray[i]
         if (questionString.length < 1) return ctx.throw("too short", 400)
         if (questionString.length > QUESTION_TEXT_MAX_LENGTH) return ctx.throw("too long", 400)
-        const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
+        var user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
         if (!user) return ctx.throw("not found", 404)
-        const question = new Question()
+        var question = new Question()
         question.question = questionString
         question.user = user
         await question.save()
