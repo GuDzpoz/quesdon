@@ -71,11 +71,28 @@ export class PageMySettings extends React.Component<{}, State> {
             <h2 className="mt-3 mb-2">やばいゾーン</h2>
             <Button color="danger" onClick={this.allDeleteQuestions.bind(this)}>自分宛ての質問を(回答済みのものも含めて)すべて削除</Button>
             <Button color="success" onClick={this.exportAnswers.bind(this)}>回答済みの質問を一括エクスポート</Button>
+            <form action="javascript://" onSubmit={this.onImport.bind(this)}>
+                <FormGroup>
+                    <label>未回答の質問をインポート</label>
+                    <Input type="textarea" name="description"
+                        placeholder="ここに貼り付け"
+                        onInput={this.inputDescription.bind(this)}
+                        defaultValue={me.description}/>
+                    <FormText>その他Quesdonから未回答の質問をインポート！<a href="https://toot.app/export/" target="_blank">エクスポートの方法</a></FormText>
+                </FormGroup>
+                <Button type="submit" color="primary" disabled={this.sendableFormImport()}>
+                    送信{this.state.saving && "しています..."}
+                </Button>
+            </form>
         </div>
     }
 
     sendableForm() {
         return this.questionBoxNameRemaining() < 0 || this.descriptionRemaining() < 0 || this.state.saving
+    }
+
+    sendableFormImport() {
+        return this.state.saving
     }
 
     descriptionRemaining() {
@@ -198,6 +215,43 @@ export class PageMySettings extends React.Component<{}, State> {
         if (!res) return
 
         alert("更新しました!")
+        location.reload()
+    }
+
+    async onImport(e: any) {
+        function errorMsg(code: number | string) {
+            return "通信に失敗しました。再度お試しください (" + code + ")"
+        }
+        this.setState({saving: true})
+
+        const form = new FormData(e.target)
+        const req = await apiFetch("/api/web/accounts/" + me.acctDisplay + "/import", {
+            method: "POST",
+            body: form,
+        }).catch(() => {
+            alert(errorMsg(-1))
+            this.setState({
+                saving: false,
+            })
+        })
+        if (!req) return
+        if (!req.ok) {
+            alert(errorMsg("HTTP-" + req.status))
+            this.setState({
+                saving: false,
+            })
+            return
+        }
+
+        const res = req.json().catch(() => {
+            alert(errorMsg(-2))
+            this.setState({
+                saving: false,
+            })
+        })
+        if (!res) return
+
+        alert("インポートしました!")
         location.reload()
     }
 
