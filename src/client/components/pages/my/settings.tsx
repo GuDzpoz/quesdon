@@ -71,6 +71,8 @@ export class PageMySettings extends React.Component<{}, State> {
             <h2 className="mt-3 mb-2">やばいゾーン</h2>
             <Button color="danger" onClick={this.allDeleteQuestions.bind(this)}>自分宛ての質問を(回答済みのものも含めて)すべて削除</Button>
             <Button color="success" onClick={this.exportAnswers.bind(this)}>回答済みの質問を一括エクスポート</Button>
+            <h2 className="mt-3 mb-2">インポート</h2>
+            その他Quesdonから未回答の質問をインポート！<a href="https://toot.app/export/" target="_blank">エクスポートの方法</a>
             <form action="javascript://" onSubmit={this.onImport.bind(this)}>
                 <FormGroup>
                     <label>未回答の質問をインポート</label>
@@ -78,7 +80,7 @@ export class PageMySettings extends React.Component<{}, State> {
                         placeholder="ここに貼り付け"
                         onInput={this.inputDescription.bind(this)}
                         defaultValue={me.description}/>
-                    <FormText>その他Quesdonから未回答の質問をインポート！<a href="https://toot.app/export/" target="_blank">エクスポートの方法</a></FormText>
+                    <FormText>JSON String</FormText>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={this.sendableFormImport()}>
                     送信{this.state.saving && "しています..."}
