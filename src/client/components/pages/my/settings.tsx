@@ -24,6 +24,7 @@ export class PageMySettings extends React.Component<{}, State> {
             descriptionCount: (me.description || "").length,
             questionBoxNameCount: (me.questionBoxName || "質問箱").length,
             saving: false,
+            savingImport: false,
         }
     }
     render() {
