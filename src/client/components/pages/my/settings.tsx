@@ -225,6 +225,7 @@ export class PageMySettings extends React.Component<{}, State> {
         this.setState({saving: true})
 
         const form = new FormData(e.target)
+        if (!me.acctDisplay) return
         const req = await apiFetch("/api/web/accounts/" + me.acctDisplay + "/import", {
             method: "POST",
             body: form,
