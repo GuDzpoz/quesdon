@@ -9,7 +9,7 @@ export class PageIndex extends React.Component {
             <title>Quesdon(toot.app)</title>
             <h1>Quesdon(toot.app)</h1>
             <p>ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonで使えるやつです。Misskeyにも勝手に対応。</p>
-            <p>本家(quesdon.rinsuki.net)が終わってもここはしばらく終わりません。</p>
+            <p>本家(quesdon.rinsuki.net)から質問を移行できる！</p>
             <details>
                 <summary>
                     これはCutls Pによる運営です。開発者の運営ではありません。
@@ -22,6 +22,12 @@ export class PageIndex extends React.Component {
                 </summary>
                 <p>自分宛ての新しい質問ができると<a href="https://mstdn.jp/@qtnotf">@qtnotf@mstdn.jp</a>よりDMで通知されます。要らない場合はこのアカウントをミュートしてください。</p>
                 <p>Misskeyでもログインできます。ログイン時に「Misskeyとしてログイン」にチェック！</p>
+            </details>
+            <details>
+                <summary>
+                他のQuesdonに未回答の質問が残っていますか？
+                </summary>
+                その他Quesdonから未回答の質問をインポートしてくることができます！まずは回答をエクスポート！<a href="https://toot.app/export/" target="_blank">エクスポートの方法</a>
             </details>
             <p>{me ? <Link to="/my">マイページ</Link> : <Link to="/login">ログイン</Link>}</p>
             <PageLatest />
