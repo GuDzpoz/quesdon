@@ -74,7 +74,7 @@ export class PageMySettings extends React.Component<{}, State> {
             <form action="javascript://" onSubmit={this.onImport.bind(this)}>
                 <FormGroup>
                     <label>未回答の質問をインポート</label>
-                    <Input type="textarea" name="description"
+                    <Input type="textarea" name="question"
                         placeholder="ここに貼り付け"
                         onInput={this.inputDescription.bind(this)}
                         defaultValue={me.description}/>
