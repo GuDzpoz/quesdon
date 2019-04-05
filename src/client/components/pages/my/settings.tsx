@@ -79,9 +79,7 @@ export class PageMySettings extends React.Component<{}, State> {
                 <FormGroup>
                     <label>未回答の質問をインポート</label>
                     <Input type="textarea" name="question"
-                        placeholder="ここに貼り付け"
-                        onInput={this.inputDescription.bind(this)}
-                        defaultValue={me.description}/>
+                        placeholder="ここに貼り付け"/>
                     <FormText>JSON String</FormText>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={this.sendableFormImport()}>
