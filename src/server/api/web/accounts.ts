@@ -207,7 +207,7 @@ router.post("/:acct/import", async (ctx) => {
     if(JSON.parse(questionStringJSON).version!="reverse") return ctx.throw("check json type", 400)
     var questionString=""
     var sel=0;
-    for(var i=questionStringArray.length;i>=0;i--){
+    for(var i=questionStringArray.length;i>0;i--){
         sel=i-1;
         questionString=questionStringArray[sel]
         if (questionString.length < 1) return ctx.throw("too short", 400)
