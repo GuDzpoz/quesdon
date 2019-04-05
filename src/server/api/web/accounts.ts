@@ -201,6 +201,29 @@ router.post("/:acct/question", async (ctx) => {
     })
 })
 
+router.post("/:acct/import", async (ctx) => {
+    const questionStringJSON = ctx.request.body.fields.question
+    const questionStringArray = JSON.parse(questionStringJSON).questions
+    if(JSON.parse(questionStringJSON).version!="reverse") return ctx.throw("check json type", 400)
+    var questionString=""
+    var sel=0;
+    for(var i=questionStringArray.length;i>0;i--){
+        sel=i-1;
+        questionString=questionStringArray[sel]
+        if (questionString.length < 1) return ctx.throw("too short", 400)
+        if (questionString.length > QUESTION_TEXT_MAX_LENGTH) return ctx.throw("too long", 400)
+        var user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
+        if (!user) return ctx.throw("not found", 404)
+        var question = new Question()
+        question.question = questionString
+        question.user = user
+        await question.save()
+        // logging
+        await questionLogger(ctx, question, "create")
+    }
+    ctx.body = {status: "ok"}
+})
+
 const getAnswers = async (ctx: Koa.Context) => {
     if (ctx.params.acct.toLowerCase().endsWith("twitter.com")) return ctx.throw("twitter service is finished.", 404)
     const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
