@@ -11,7 +11,8 @@ interface State {
     questionBoxNameMax: number
     descriptionCount: number
     questionBoxNameCount: number
-    saving: boolean
+    saving: boolean,
+    savingImport: boolean,
 }
 
 export class PageMySettings extends React.Component<{}, State> {
