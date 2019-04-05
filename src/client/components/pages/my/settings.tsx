@@ -83,7 +83,7 @@ export class PageMySettings extends React.Component<{}, State> {
                     <FormText>JSON String</FormText>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={this.sendableFormImport()}>
-                    送信{this.state.saving && "しています..."}
+                    送信{this.state.savingImport && "しています..."}
                 </Button>
             </form>
         </div>
@@ -224,7 +224,7 @@ export class PageMySettings extends React.Component<{}, State> {
         function errorMsg(code: number | string) {
             return "通信に失敗しました。再度お試しください (" + code + ")"
         }
-        this.setState({saving: true})
+        this.setState({savingImport: true})
 
         const form = new FormData(e.target)
         if (!me) return
@@ -234,14 +234,14 @@ export class PageMySettings extends React.Component<{}, State> {
         }).catch(() => {
             alert(errorMsg(-1))
             this.setState({
-                saving: false,
+                savingImport: false,
             })
         })
         if (!req) return
         if (!req.ok) {
             alert(errorMsg("HTTP-" + req.status))
             this.setState({
-                saving: false,
+                savingImport: false,
             })
             return
         }
@@ -249,7 +249,7 @@ export class PageMySettings extends React.Component<{}, State> {
         const res = req.json().catch(() => {
             alert(errorMsg(-2))
             this.setState({
-                saving: false,
+                savingImport: false,
             })
         })
         if (!res) return
