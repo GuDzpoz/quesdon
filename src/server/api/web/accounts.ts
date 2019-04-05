@@ -203,15 +203,15 @@ router.post("/:acct/question", async (ctx) => {
 
 router.post("/:acct/import", async (ctx) => {
     const questionStringJSON = ctx.request.body.fields.question
-    const questionStringArray = JSON.parse(questionStringJSON)
+    const questionStringArray = JSON.parse(questionStringJSON).questions
+    if(JSON.parse(questionStringJSON).version!="reverse") return ctx.throw("check json type", 400)
     var questionString=""
-    for(var i=0;i<questionStringArray.length;i++){
+    for(var i=questionStringArray.length;i>=0;i--){
         questionString=questionStringArray[i]
-        if (questionString.length < 1) return ctx.throw("please input question", 400)
+        if (questionString.length < 1) return ctx.throw("too short", 400)
         if (questionString.length > QUESTION_TEXT_MAX_LENGTH) return ctx.throw("too long", 400)
         const user = await User.findOne({acctLower: ctx.params.acct.toLowerCase()})
         if (!user) return ctx.throw("not found", 404)
-        if (user.stopNewQuestion) return ctx.throw(400, "this user has stopped new question submit")
         const question = new Question()
         question.question = questionString
         question.user = user
