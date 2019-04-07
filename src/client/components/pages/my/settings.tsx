@@ -11,7 +11,8 @@ interface State {
     questionBoxNameMax: number
     descriptionCount: number
     questionBoxNameCount: number
-    saving: boolean
+    saving: boolean,
+    savingImport: boolean,
 }
 
 export class PageMySettings extends React.Component<{}, State> {
@@ -24,6 +25,7 @@ export class PageMySettings extends React.Component<{}, State> {
             descriptionCount: (me.description || "").length,
             questionBoxNameCount: (me.questionBoxName || "質問箱").length,
             saving: false,
+            savingImport: false,
         }
     }
     render() {
@@ -77,9 +79,7 @@ export class PageMySettings extends React.Component<{}, State> {
                 <FormGroup>
                     <label>未回答の質問をインポート</label>
                     <Input type="textarea" name="question"
-                        placeholder="ここに貼り付け"
-                        onInput={this.inputDescription.bind(this)}
-                        defaultValue={me.description}/>
+                        placeholder="ここに貼り付け"/>
                     <FormText>JSON String</FormText>
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={this.sendableFormImport()}>
