@@ -7,11 +7,8 @@ export class Footer extends React.Component {
         return <footer className="container">
             <p>Quesdon は AGPL-3.0 で提供されています。<a href={upstreamUrl}>ソースコード</a>&nbsp;
             (<a href={`${upstreamUrl}/commits/${gitVersion}`}>{gitVersion.slice(0, 7)}</a>)</p>
-            <p>
-                公式アカウント: <a href="https://mstdn.rinsuki.net/@quesdon">@quesdon@mstdn.rinsuki.net</a>
-            </p>
-            <p>開発者: <a href="https://mstdn.rinsuki.net/@rinsuki">@rinsuki@mstdn.rinsuki.net</a></p>
-            <p>このサーバーは<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P</a>が管理しています。</p>
+            <p>公式アカウント: <a href="https://mstdn.rinsuki.net/@quesdon">@quesdon@mstdn.rinsuki.net</a>/開発者: <a href="https://mstdn.rinsuki.net/@rinsuki">@rinsuki@mstdn.rinsuki.net</a></p>
+            <p>このサーバーは<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P(@Cutls@kirishima.cloud)</a>が管理しています。</p>
             <p>
                 {usingDarkTheme
                 ?   <a href="#" onClick={this.leaveDarkTheme.bind(this)}>ダークテーマから戻す</a>

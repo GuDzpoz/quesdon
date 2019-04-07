@@ -71,3 +71,6 @@ footer.container{
 footer.container p{
     margin: 0;
 }
+button{
+    margin:5px;
+}

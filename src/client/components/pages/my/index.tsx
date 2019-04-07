@@ -20,6 +20,7 @@ export class PageMyIndex extends React.Component {
                 <Link to="/my/followers"><ListGroupItem className="justify-content-between">Quesdonを利用しているフォロワー一覧</ListGroupItem></Link>
                 <Link to="/my/settings"><ListGroupItem className="justify-content-between">設定</ListGroupItem></Link>
             </ListGroup>
+            <p></p>
             <ul>
                 <li><a href="javascript://" onClick={this.logoutConfirm.bind(this)}>ログアウト</a></li>
             </ul>
