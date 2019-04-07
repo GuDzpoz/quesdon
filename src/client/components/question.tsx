@@ -6,7 +6,6 @@ import { APIQuestion } from "../../api-interfaces"
 import { apiFetch } from "../api-fetch"
 import { Checkbox } from "./common/checkbox"
 import { UserLink } from "./userLink"
-import Linkify from 'react-linkify'
 
 interface Props extends APIQuestion {
     hideAnswerUser?: boolean | undefined
@@ -68,7 +67,7 @@ export class Question extends React.Component<Props, State> {
     }
 
     renderAnswer() {
-        return <CardText className="question-text"><Linkify>{this.props.answer}</Linkify></CardText>
+        return <CardText className="question-text">{this.props.answer}</CardText>
     }
 
     renderAnswerForm() {
