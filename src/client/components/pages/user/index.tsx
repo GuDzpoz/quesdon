@@ -34,6 +34,12 @@ export class PageUserIndex extends React.Component<Props, State> {
     render() {
         const { user } = this.state
         if (!user) return <Loading/>
+        const exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        if(user.description){
+            var desc=user.description;
+        }else{
+            var desc=""
+        }
         return <div>
             <Title>{user.name} @{user.acctDisplay} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
@@ -42,11 +48,11 @@ export class PageUserIndex extends React.Component<Props, State> {
                 <p>
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
                     <a href={user.url || `https://${user.hostName}/@${user.acct.split("@")[0]}`}
-                        rel="nofollow me">
+                        rel="nofollow" target="_blank">
                         プロフィールをチェックしよう
                     </a>
                 </p>
-                <p>{user.description}</p>
+                <p>{desc.replace(exp,'<a href="$1" target="_blank">$1</a>')}</p>
                 { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
                     <Input type="textarea" name="question"
@@ -77,6 +83,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                 }
             </div></Jumbotron>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
+                        これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。
             {this.state.questions
             ?   <div>
                     {this.state.questions.map((question) =>

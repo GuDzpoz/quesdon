@@ -64,3 +64,13 @@ details {
     padding:0 !important;
     padding-right: 0.5rem !important;
 }
+footer.container{
+    color: rgb(128, 128, 128);
+    font-size: 80%;
+}
+footer.container p{
+    margin: 0;
+}
+button{
+    margin:5px;
+}
