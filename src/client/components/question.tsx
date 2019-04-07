@@ -67,12 +67,10 @@ export class Question extends React.Component<Props, State> {
     }
 
     renderAnswer() {
-        /*
         const exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         if(this) return false
-        var ans=this.props.answer.replace(exp,'<a href="$1" target="_blank">$1</a>')
-        */
-        return <CardText className="question-text">{this.props.answer}</CardText>
+        var ans=this.props.answer.toString().replace(exp,'<a href="$1" target="_blank">$1</a>')
+        return <CardText className="question-text">{ans}</CardText>
     }
 
     renderAnswerForm() {
