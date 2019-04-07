@@ -33,6 +33,7 @@ export class PageUserIndex extends React.Component<Props, State> {
 
     render() {
         const { user } = this.state
+        const exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         if (!user) return <Loading/>
         return <div>
             <Title>{user.name} @{user.acctDisplay} さんの{user.questionBoxName}</Title>
@@ -46,7 +47,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                         プロフィールをチェックしよう
                     </a>
                 </p>
-                <p>{user.description}</p>
+                <p>{user.description.replace(exp,'<a href="$1" target="_blank">$1</a>')}</p>
                 { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
                     <Input type="textarea" name="question"
