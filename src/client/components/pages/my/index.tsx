@@ -15,10 +15,10 @@ export class PageMyIndex extends React.Component {
             <h1>マイページ</h1>
             <p>こんにちは、{me.name}さん!</p>
             <ListGroup>
-                <ListGroupItem className="justify-content-between"><Link to={`/@${me.acct}`}>あなたのプロフィール</Link></ListGroupItem>
-                <ListGroupItem className="justify-content-between"><Link to="/my/questions">あなた宛ての質問<QuestionRemaining/></Link></ListGroupItem>
-                <ListGroupItem className="justify-content-between"><Link to="/my/followers">Quesdonを利用しているフォロワー一覧</Link></ListGroupItem>
-                <ListGroupItem className="justify-content-between"><Link to="/my/settings">設定</Link></ListGroupItem>
+                <Link to={`/@${me.acct}`}><ListGroupItem className="justify-content-between">あなたのプロフィール</ListGroupItem></Link>
+                <Link to="/my/questions"><ListGroupItem className="justify-content-between">あなた宛ての質問<QuestionRemaining/></ListGroupItem></Link>
+                <Link to="/my/followers"><ListGroupItem className="justify-content-between">Quesdonを利用しているフォロワー一覧</ListGroupItem></Link>
+                <Link to="/my/settings"><ListGroupItem className="justify-content-between">設定</ListGroupItem></Link>
             </ListGroup>
             <ul>
                 <li><a href="javascript://" onClick={this.logoutConfirm.bind(this)}>ログアウト</a></li>

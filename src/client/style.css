@@ -64,3 +64,10 @@ details {
     padding:0 !important;
     padding-right: 0.5rem !important;
 }
+.container{
+    color: rgb(128, 128, 128);
+    font-size: 80%;
+}
+.container p{
+    margin: 0;
+}
