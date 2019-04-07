@@ -68,6 +68,8 @@ export class Question extends React.Component<Props, State> {
 
     renderAnswer() {
         const exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        if(this) return false
+        if(this.props) return false
         if(this.props.answer){
             var ans=this.props.answer;
         }else{

@@ -33,13 +33,13 @@ export class PageUserIndex extends React.Component<Props, State> {
 
     render() {
         const { user } = this.state
+        if (!user) return <Loading/>
         const exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         if(user.description){
             var desc=user.description;
         }else{
             var desc=""
         }
-        if (!user) return <Loading/>
         return <div>
             <Title>{user.name} @{user.acctDisplay} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
