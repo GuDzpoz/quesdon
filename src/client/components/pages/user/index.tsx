@@ -48,7 +48,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                 <p>
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
                     <a href={user.url || `https://${user.hostName}/@${user.acct.split("@")[0]}`}
-                        rel="nofollow me">
+                        rel="nofollow" target="_blank">
                         プロフィールをチェックしよう
                     </a>
                 </p>
@@ -83,6 +83,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                 }
             </div></Jumbotron>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
+                        これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。
             {this.state.questions
             ?   <div>
                     {this.state.questions.map((question) =>
