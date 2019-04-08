@@ -5,8 +5,10 @@ import { gitVersion, upstreamUrl, usingDarkTheme } from "../initial-state"
 export class Footer extends React.Component {
     render() {
         return <footer className="container">
-            <div className="data">
+            <div className="notice">
                 <p>これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。</p>
+            </div>
+            <div className="data">
                 <p>公式アカウント: <a href="https://mstdn.rinsuki.net/@quesdon" target="_blank">@quesdon@mstdn.rinsuki.net</a>/開発者: <a href="https://mstdn.rinsuki.net/@rinsuki" target="_blank">@rinsuki@mstdn.rinsuki.net</a></p>
                 <p>このサーバーは<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P(@Cutls@kirishima.cloud)</a>が管理しています。(<a href="https://quesdon.toot.app/@Cutls@kirishima.cloud">運営に質問する</a>)</p>
             </div>
@@ -17,8 +19,8 @@ export class Footer extends React.Component {
             </div>
             <div className="darktheme">
                 {usingDarkTheme
-                ?   <a href="#" onClick={this.leaveDarkTheme.bind(this)}>ダークテーマから戻す</a>
-                :   <a href="#" onClick={this.enterDarkTheme.bind(this)}>ダークテーマにする(β)</a>
+                ?   <button className="btn" onClick={this.leaveDarkTheme.bind(this)}>ダークテーマから戻す</button>
+                :   <button className="btn" onClick={this.enterDarkTheme.bind(this)}>ダークテーマにする(β)</button>
                 }
             </div>
         </footer>

@@ -69,6 +69,7 @@ footer.container{
     font-size: 80%;
     display:grid;
     grid-template-areas:
+        "notice notice"
         "data logo"
         "darktheme darktheme";
 }
@@ -77,6 +78,9 @@ footer.container p{
 }
 button{
     margin:5px;
+}
+footer .notice{
+    grid-area: notice;
 }
 footer .data{
     grid-area: data;
@@ -89,4 +93,7 @@ footer .darktheme{
 }
 footer button{
     width:100%;
+}
+footer.title{
+    font-size: 2rem;
 }
