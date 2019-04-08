@@ -68,9 +68,38 @@ footer.container{
     color: rgb(128, 128, 128);
     font-size: 80%;
 }
+@media screen and (min-width:1024px) {
+    footer.container{
+        display:grid;
+        grid-template-areas:
+            "notice notice"
+            "data logo"
+            "darktheme darktheme";
+    }
+}
 footer.container p{
     margin: 0;
 }
 button{
     margin:5px;
+}
+footer .notice{
+    grid-area: notice;
+}
+footer .data{
+    grid-area: data;
+}
+footer .logo{
+    grid-area: logo;
+}
+footer .darktheme{
+    grid-area: darktheme;
+    text-align: center;
+}
+footer button{
+    width:100%;
+    max-width: 500px;
+}
+footer .title{
+    font-size: 2rem;
 }
