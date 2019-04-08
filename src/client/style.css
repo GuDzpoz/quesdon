@@ -67,10 +67,26 @@ details {
 footer.container{
     color: rgb(128, 128, 128);
     font-size: 80%;
+    display:grid;
+    grid-template-areas:
+        "data logo"
+        "darktheme darktheme";
 }
 footer.container p{
     margin: 0;
 }
 button{
     margin:5px;
+}
+footer .data{
+    grid-area: data;
+}
+footer .logo{
+    grid-area: logo;
+}
+footer .darktheme{
+    grid-area: darktheme;
+}
+footer button{
+    width:100%;
 }
