@@ -90,10 +90,12 @@ footer .logo{
 }
 footer .darktheme{
     grid-area: darktheme;
+    text-align: center;
 }
 footer button{
     width:100%;
+    max-width: 500px;
 }
-footer.title{
+footer .title{
     font-size: 2rem;
 }
