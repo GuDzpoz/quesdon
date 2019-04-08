@@ -67,11 +67,15 @@ details {
 footer.container{
     color: rgb(128, 128, 128);
     font-size: 80%;
-    display:grid;
-    grid-template-areas:
-        "notice notice"
-        "data logo"
-        "darktheme darktheme";
+}
+@media screen and (min-width:1024px) {
+    footer.container{
+        display:grid;
+        grid-template-areas:
+            "notice notice"
+            "data logo"
+            "darktheme darktheme";
+    }
 }
 footer.container p{
     margin: 0;
