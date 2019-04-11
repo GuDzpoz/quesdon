@@ -3,7 +3,7 @@ import * as fs from "fs"
 import * as Router from "koa-router"
 import * as mongoose from "mongoose"
 import fetch from "node-fetch"
-import { BASE_URL } from "../../config"
+import { BASE_URL, ADMIN } from "../../config"
 import { Question, QuestionLike, User } from "../../db/index"
 import { questionLogger } from "../../utils/questionLog"
 

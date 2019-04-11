@@ -221,6 +221,7 @@ router.get("/redirect", async (ctx) => {
     user.hostName = profile.hostName
     user.url = profile.url
     user.upstreamId = profile.id
+    user.isDeleted = false
     await user.save()
     ctx.session!.user = user.id
     ctx.redirect("/my")

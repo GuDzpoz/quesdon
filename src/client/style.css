@@ -76,6 +76,9 @@ footer.container{
             "data logo"
             "darktheme darktheme";
     }
+    footer .title{
+        font-size: 2rem;
+    }
 }
 footer.container p{
     margin: 0;
@@ -99,7 +102,4 @@ footer .darktheme{
 footer button{
     width:100%;
     max-width: 500px;
-}
-footer .title{
-    font-size: 2rem;
 }
