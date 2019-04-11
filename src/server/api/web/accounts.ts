@@ -84,7 +84,9 @@ router.get("/followers", async (ctx) => {
 router.post("/ban", async (ctx) => {
     const target = ctx.request.body
     if (!ctx.session!.user) return ctx.throw("please login", 403)
-    if (ctx.session!.user.acctLower!=ADMIN) return ctx.throw("not admin", 403)
+    const me = await User.findById(ctx.session!.user)
+    if (!me) return ctx.throw("not found", 404)
+    if (me.acctLower != ADMIN) return ctx.throw("not admin", 403)
     const user = await User.findById(target)
     if (!user) return ctx.throw("not found", 404)
     user.isDeleted = true
@@ -95,8 +97,7 @@ router.get("/all_users", async (ctx) => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const user = await User.findById(ctx.session!.user)
     if (!user) return ctx.throw("not found", 404)
-    console.log(user.acctLower+" with "+ ADMIN)
-    if (user.acctLower == ADMIN) return ctx.throw("not admin", 403)
+    if (user.acctLower != ADMIN) return ctx.throw("not admin", 403)
     if (user.hostName === "twitter.com") {
         return {max_id: undefined, accounts: []}
     }
