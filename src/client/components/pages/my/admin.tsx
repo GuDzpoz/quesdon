@@ -4,6 +4,7 @@ import { APIUser } from "../../../../api-interfaces"
 import { apiFetch } from "../../../api-fetch"
 import { Title } from "../../common/title"
 import { UserLink } from "../../userLink"
+import { me } from "../../../initial-state"
 
 interface State {
     accounts: APIUser[]
@@ -19,17 +20,24 @@ export class PageMyFollowers extends React.Component<{}, State> {
         }
     }
 
+
     render() {
         return <div>
             <Title>Quesdonの管理</Title>
             <h1>Quesdonの管理</h1>
+            {me.isAdmin ?
             <ul>
                 {this.state.accounts.map((user) => <li><UserLink {...user} /><Button onClick={this.ban.bind(user.acct.toLowerCase())}>凍結する</Button></li>)}
             </ul>
+             : "管理者権限がありません"}
             {this.state.loading ? "読み込み中" :  "完了"}
         </div>
     }
-
+    componentDidMount() {
+        if(!me.isAdmin){
+            location.href="/my"
+        }
+    }
     async ban(user) {
         function errorMsg(code: number | string) {
             return "読み込みに失敗しました。再度お試しください (" + code + ")"
