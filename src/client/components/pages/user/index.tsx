@@ -55,6 +55,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                 <p>{desc}</p>
                 { user.isDeleted ? <p>このユーザーは凍結されています。管理人までお問い合わせください。</p> : user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
+                {user.isAdmin ? "通報するときは、quesdon.toot.appからはじまるそのユーザーのアドレスと理由を入力し、「名乗る」にチェックを入れてください。" : ""}
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
                         onInput={this.questionInput.bind(this)}
@@ -82,10 +83,10 @@ export class PageUserIndex extends React.Component<Props, State> {
                 </form>
                 }
             </div></Jumbotron>
-            {this.checkAdmin() ? <p><Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button></p> : ""}
+            <p><a href="https://quesdon.toot.app/@Cutls@kirishima.cloud" className="mini">通報する(運営の質問箱)</a>{this.checkAdmin() && !user.isDeleted ? <Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button> : ""}</p>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
-                        これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。
-            { user.isDeleted ? <p>このユーザーこのユーザーの回答は表示できません。</p> : this.state.questions
+                        <span className="mini">これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。</span>
+            { user.isDeleted ? <p>このユーザーの回答は表示できません。</p> : this.state.questions
             ?   <div>
                     {this.state.questions.map((question) =>
                         <Question {...question} hideAnswerUser key={question._id}/>,
