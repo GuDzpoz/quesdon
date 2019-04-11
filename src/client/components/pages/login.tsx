@@ -37,6 +37,7 @@ export class PageLogin extends React.Component<{}, State> {
                 </FormGroup>
                 <Button type="submit" color="primary" disabled={loading}>{ loading ? "読み込み中" : "ログイン" }</Button>
             </form>
+            <p><a href="https://toot.app/priv.html" target="_blank">プライバシーポリシー</a>をご確認ください。</p>
         </div>
     }
 

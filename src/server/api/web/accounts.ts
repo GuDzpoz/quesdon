@@ -5,9 +5,10 @@ import fetch from "node-fetch"
 import * as parseLinkHeader from "parse-link-header"
 import { Link, Links } from "parse-link-header"
 import { QUESTION_TEXT_MAX_LENGTH } from "../../../common/const"
-import { BASE_URL, PUSHBULLET_CLIENT_ID, PUSHBULLET_CLIENT_SECRET, TOOT_ORIGIN, TOOT_TOKEN } from "../../config"
+import { BASE_URL, PUSHBULLET_CLIENT_ID, PUSHBULLET_CLIENT_SECRET, TOOT_ORIGIN, TOOT_TOKEN, ADMIN } from "../../config"
 import { Question, User } from "../../db/index"
 import { questionLogger } from "../../utils/questionLog"
+
 
 const router = new Router()
 
@@ -79,6 +80,47 @@ router.get("/followers", async (ctx) => {
         accounts: followersObject,
         max_id,
     }
+})
+router.post("/ban", async (ctx) => {
+    const target = ctx.request.body
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const me = await User.findById(ctx.session!.user)
+    if (!me) return ctx.throw("not found", 404)
+    if (me.acctLower != ADMIN) return ctx.throw("not admin", 403)
+    const user = await User.findOne({acctLower: target.toLowerCase()})
+    if (!user) return ctx.throw("not found", 404)
+    user.isDeleted = true
+    await user.save()
+
+    await Question.update({
+        user: user,
+    }, {
+        $set: {
+            isDeleted: true,
+        },
+    }, {
+        multi: true,
+    })
+
+    ctx.body = {status: "ok"}
+})
+router.get("/all_users", async (ctx) => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const user = await User.findById(ctx.session!.user)
+    if (!user) return ctx.throw("not found", 404)
+    if (user.acctLower != ADMIN) return ctx.throw("not admin", 403)
+    if (user.hostName === "twitter.com") {
+        return {max_id: undefined, accounts: []}
+    }
+    const users = await User.find()
+    ctx.body = users
+})
+router.get("/redirect/admin", async (ctx) => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const user = await User.findOne({isAdmin: true})
+    if (!user) return ctx.throw("not found", 404)
+    const admin = user.acct
+    ctx.redirect("/@"+user.acct)
 })
 
 router.post("/update", async (ctx) => {

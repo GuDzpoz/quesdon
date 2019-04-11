@@ -11,12 +11,13 @@ export class Footer extends React.Component {
             <div className="data">
                 <p>公式アカウント: <a href="https://mstdn.rinsuki.net/@quesdon" target="_blank">@quesdon@mstdn.rinsuki.net</a></p>
                 <p>開発者: <a href="https://mstdn.rinsuki.net/@rinsuki" target="_blank">@rinsuki@mstdn.rinsuki.net</a></p>
-                <p>このサーバーは<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P(@Cutls@kirishima.cloud)</a>が管理しています。(<a href="https://quesdon.toot.app/@Cutls@kirishima.cloud">運営に質問する</a>)</p>
+                <p>このサーバーは<a href="https://kirishima.cloud/@Cutls" target="_blank" title="Cutls P(@Cutls@kirishima.cloud)">Cutls P</a>が管理しています。(<a href="https://quesdon.toot.app/@Cutls@kirishima.cloud">運営に質問する</a>)</p>
             </div>
             <div className="logo">
                 <p className="title">Quesdon</p>
-                <p>Quesdon は AGPL-3.0 で提供されています。<a target="_blank" href={upstreamUrl}>ソースコード</a>&nbsp;
+                <p>AGPL-3.0&nbsp;<a target="_blank" href={upstreamUrl}>ソースコード</a>&nbsp;
                 (<a target="_blank" href={`${upstreamUrl}/commits/${gitVersion}`}>{gitVersion.slice(0, 7)}</a>)</p>
+                <p><a href="https://toot.app/priv.html" target="_blank">プライバシーポリシー</a></p>
             </div>
             <div className="darktheme">
                 {usingDarkTheme

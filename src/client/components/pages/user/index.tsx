@@ -44,7 +44,7 @@ export class PageUserIndex extends React.Component<Props, State> {
             <Title>{user.name} @{user.acctDisplay} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
                 <img src={user.avatarUrl} style={{maxWidth: "8em", height: "8em"}}/>
-                <h1>{user.name}</h1>
+                <h1>{user.name}</h1>{user.isAdmin ? <Badge pill>Admin(凍結権限所持)</Badge> : ""}
                 <p>
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
                     <a href={user.url || `https://${user.hostName}/@${user.acct.split("@")[0]}`}
@@ -53,8 +53,9 @@ export class PageUserIndex extends React.Component<Props, State> {
                     </a>
                 </p>
                 <p>{desc}</p>
-                { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
+                { user.isDeleted ? <p>このユーザーは凍結されています。管理人までお問い合わせください。</p> : user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
+                {user.isAdmin ? "通報するときは、quesdon.toot.appからはじまるそのユーザーのアドレスと理由を入力し、「名乗る」にチェックを入れてください。" : ""}
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
                         onInput={this.questionInput.bind(this)}
@@ -82,9 +83,10 @@ export class PageUserIndex extends React.Component<Props, State> {
                 </form>
                 }
             </div></Jumbotron>
+            <p><a href="/api/web/accounts/redirect/admin" className="mini">通報する(運営の質問箱)</a>{this.checkAdmin() && !user.isDeleted ? <Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button> : ""}</p>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
-                        これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。
-            {this.state.questions
+                        <span className="mini">これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。</span>
+            { user.isDeleted ? <p>このユーザーの回答は表示できません。</p> : this.state.questions
             ?   <div>
                     {this.state.questions.map((question) =>
                         <Question {...question} hideAnswerUser key={question._id}/>,
@@ -117,11 +119,52 @@ export class PageUserIndex extends React.Component<Props, State> {
             location.reload()
         })
     }
-
+    checkAdmin() {
+        if(!me){return false}
+        if(!me.isAdmin){
+            return false;
+        }
+        return true;
+    }
     questionInput(e: any) {
         const count = e.target.value.length
         this.setState({
             questionLength: count,
         })
+    }
+    async ban() {
+        function errorMsg(code: number | string) {
+            return "読み込みに失敗しました。再度お試しください (" + code + ")"
+        }
+        if(!me){return false}
+        if(!me.isAdmin){
+            alert("管理者権限が必要です。")
+            return false;
+        }
+        if(!confirm("凍結しますか")){
+            return false;
+        }
+        if(!this.state.user){return false;}
+        const his=this.state.user.acct;
+        const req = await apiFetch("/api/web/accounts/ban", {
+            method: "POST",
+            body: his
+        }).catch((e) => {
+            alert(errorMsg(-1))
+        })
+        if (!req) return
+        if (!req.ok) {
+            alert(errorMsg("HTTP-" + req.status))
+            return
+        }
+
+        const res = await req.json().catch((e) => {
+            alert(errorMsg(-2))
+            return
+        })
+        if (!res) return
+
+        alert("凍結しました。")
+        if (!res) return
     }
 }
