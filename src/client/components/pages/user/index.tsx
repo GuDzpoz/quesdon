@@ -143,7 +143,8 @@ export class PageUserIndex extends React.Component<Props, State> {
         if(!confirm("凍結しますか")){
             return false;
         }
-        var his=this.state.user.acct;
+        if(!this.state.user){return false;}
+        const his=this.state.user.acct;
         const req = await apiFetch("/api/web/accounts/ban", {
             method: "POST",
             body: his
