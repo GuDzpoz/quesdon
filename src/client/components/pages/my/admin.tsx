@@ -72,7 +72,7 @@ export class PageMyAdmin extends React.Component<{}, State> {
         })
         if (!res) return
         this.setState({
-            accounts: this.state.accounts.concat(res.accounts),
+            accounts: this.state.accounts.concat(res),
             loading: false,
         })
     }

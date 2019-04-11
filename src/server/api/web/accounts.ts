@@ -84,7 +84,7 @@ router.get("/followers", async (ctx) => {
 router.post("/ban", async (ctx) => {
     const target = ctx.request.body
     if (!ctx.session!.user) return ctx.throw("please login", 403)
-    const me = await User.findById(ctx.session!.user)
+    const me = await User.findOne({acctLower: target.toLowerCase()})
     if (!me) return ctx.throw("not found", 404)
     if (me.acctLower != ADMIN) return ctx.throw("not admin", 403)
     const user = await User.findById(target)
