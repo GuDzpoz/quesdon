@@ -6,7 +6,6 @@ import { me } from "../../../initial-state"
 import { Title } from "../../common/title"
 import { QuestionRemaining } from "../../question-remaining"
 import { ListGroup, ListGroupItem } from "reactstrap"
-import { ADMIN } from "../../../../server/config"
 
 export class PageMyIndex extends React.Component {
     render() {
@@ -20,7 +19,7 @@ export class PageMyIndex extends React.Component {
                 <Link to="/my/questions"><ListGroupItem className="justify-content-between">あなた宛ての質問<QuestionRemaining/></ListGroupItem></Link>
                 <Link to="/my/followers"><ListGroupItem className="justify-content-between">Quesdonを利用しているフォロワー一覧</ListGroupItem></Link>
                 <Link to="/my/settings"><ListGroupItem className="justify-content-between">設定</ListGroupItem></Link>
-                { me.acct.toLowerCase()==ADMIN ? <Link to="/my/admin"><ListGroupItem className="justify-content-between">管理ページ</ListGroupItem></Link> : "" }
+                { me.isAdmin ? <Link to="/my/admin"><ListGroupItem className="justify-content-between">管理ページ</ListGroupItem></Link> : "" }
             </ListGroup>
             <p></p>
             <ul>

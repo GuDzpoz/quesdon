@@ -18,6 +18,7 @@ const schema = new mongoose.Schema({
     hostName: {type: String},
     stopNewQuestion: {type: Boolean},
     isDeleted: {type: Boolean, default: false},
+    isAdmin: {type: Boolean, default: false},
 }, {
     timestamps: true,
 })
@@ -51,6 +52,7 @@ export interface IUser extends mongoose.Document {
     hostName: string | null
     stopNewQuestion: boolean | null
     isDeleted: boolean
+    isAdmin: boolean
 }
 
 export default mongoose.model("users", schema) as mongoose.Model<IUser>

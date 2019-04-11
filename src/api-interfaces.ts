@@ -28,5 +28,7 @@ export interface APIUser {
     hostName: string
     pushbulletEnabled: boolean
     isTwitter: boolean
-    stopNewQuestion: boolean
+    stopNewQuestion: boolean,
+    isAdmin: boolean,
+    isDeleted: boolean
 }

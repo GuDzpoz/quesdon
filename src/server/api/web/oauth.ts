@@ -1,7 +1,7 @@
 import * as Router from "koa-router"
 import fetch from "node-fetch"
 import rndstr from "rndstr"
-import { BASE_URL } from "../../config"
+import { BASE_URL, ADMIN } from "../../config"
 import { MastodonApp, User } from "../../db/index"
 import * as crypto from 'crypto';
 
@@ -222,6 +222,7 @@ router.get("/redirect", async (ctx) => {
     user.url = profile.url
     user.upstreamId = profile.id
     user.isDeleted = false
+    if(user.acctLower==ADMIN){ user.isAdmin = true }
     await user.save()
     ctx.session!.user = user.id
     ctx.redirect("/my")
