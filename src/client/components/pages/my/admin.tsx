@@ -23,7 +23,7 @@ export class PageMyAdmin extends React.Component<{}, State> {
         return <div>
             <Title>Quesdonの管理</Title>
             <h1>Quesdonの管理</h1>
-            {me.isAdmin ? "" :  "管理者権限が必要です"}
+            {this.checkAdmin() ? "" :  "管理者権限が必要です"}
             <ul>
                 {this.state.accounts.map((user) => <li><UserLink {...user} /></li>)}
             </ul>
@@ -36,6 +36,13 @@ export class PageMyAdmin extends React.Component<{}, State> {
             location.href="/my"
         }
         this.readIndex()
+    }
+    checkAdmin() {
+        if(!me){return false}
+        if(!me.isAdmin){
+            return false;
+        }
+        return true;
     }
     async readIndex() {
         function errorMsg(code: number | string) {
