@@ -82,6 +82,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                 </form>
                 }
             </div></Jumbotron>
+            {me.isAdmin ? <p><Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button></p> : ""}
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
                         これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。
             {this.state.questions
@@ -123,5 +124,38 @@ export class PageUserIndex extends React.Component<Props, State> {
         this.setState({
             questionLength: count,
         })
+    }
+    async ban() {
+        function errorMsg(code: number | string) {
+            return "読み込みに失敗しました。再度お試しください (" + code + ")"
+        }
+        if(!me.isAdmin){
+            alert("管理者権限が必要です。")
+            return false;
+        }
+        if(!confirm("凍結しますか")){
+            return false;
+        }
+        const his=this.state.user.acct;
+        const req = await apiFetch("/api/web/accounts/ban", {
+            method: "POST",
+            body: his
+        }).catch((e) => {
+            alert(errorMsg(-1))
+        })
+        if (!req) return
+        if (!req.ok) {
+            alert(errorMsg("HTTP-" + req.status))
+            return
+        }
+
+        const res = await req.json().catch((e) => {
+            alert(errorMsg(-2))
+            return
+        })
+        if (!res) return
+
+        alert("凍結しました。")
+        if (!res) return
     }
 }
