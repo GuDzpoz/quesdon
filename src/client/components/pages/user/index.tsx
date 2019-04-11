@@ -44,7 +44,7 @@ export class PageUserIndex extends React.Component<Props, State> {
             <Title>{user.name} @{user.acctDisplay} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
                 <img src={user.avatarUrl} style={{maxWidth: "8em", height: "8em"}}/>
-                <h1>{user.name}</h1>{this.checkAdmin() ? <Badge pill>Admin(凍結権限所持)</Badge> : ""}
+                <h1>{user.name}</h1>{user.isAdmin ? <Badge pill>Admin(凍結権限所持)</Badge> : ""}
                 <p>
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
                     <a href={user.url || `https://${user.hostName}/@${user.acct.split("@")[0]}`}
