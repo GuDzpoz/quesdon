@@ -212,6 +212,9 @@ router.get("/redirect", async (ctx) => {
     var user = await User.findOne({acctLower: acct.toLowerCase()})
     if (user == null) {
         user = new User()
+        user.isDeleted = false
+    }else if(user.isDeleted){
+        ctx.redirect("/login?error=banned")
     }
     user.acct = acct
     user.acctLower = acct.toLowerCase()
@@ -221,7 +224,6 @@ router.get("/redirect", async (ctx) => {
     user.hostName = profile.hostName
     user.url = profile.url
     user.upstreamId = profile.id
-    user.isDeleted = false
     if(user.acctLower==ADMIN){ user.isAdmin = true }
     await user.save()
     ctx.session!.user = user.id

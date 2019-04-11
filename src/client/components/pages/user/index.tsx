@@ -44,7 +44,7 @@ export class PageUserIndex extends React.Component<Props, State> {
             <Title>{user.name} @{user.acctDisplay} さんの{user.questionBoxName}</Title>
             <Jumbotron><div style={{textAlign: "center"}}>
                 <img src={user.avatarUrl} style={{maxWidth: "8em", height: "8em"}}/>
-                <h1>{user.name}</h1>
+                <h1>{user.name}</h1>{this.checkAdmin() ? <Badge pill>Admin(凍結権限所持)</Badge> : ""}
                 <p>
                     さんの{user.questionBoxName || "質問箱"}&nbsp;
                     <a href={user.url || `https://${user.hostName}/@${user.acct.split("@")[0]}`}
@@ -53,7 +53,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                     </a>
                 </p>
                 <p>{desc}</p>
-                { user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
+                { user.isDeleted ? <p>このユーザーは凍結されています。管理人までお問い合わせください。</p> : user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
@@ -85,7 +85,7 @@ export class PageUserIndex extends React.Component<Props, State> {
             {this.checkAdmin() ? <p><Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button></p> : ""}
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
                         これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。
-            {this.state.questions
+            { user.isDeleted ? <p>このユーザーこのユーザーの回答は表示できません。</p> : this.state.questions
             ?   <div>
                     {this.state.questions.map((question) =>
                         <Question {...question} hideAnswerUser key={question._id}/>,
