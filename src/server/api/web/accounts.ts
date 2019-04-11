@@ -115,11 +115,12 @@ router.get("/all_users", async (ctx) => {
     const users = await User.find()
     ctx.body = users
 })
-router.get("/get_admin", async (ctx) => {
+router.get("/redirect/admin", async (ctx) => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const user = await User.findOne({isAdmin: true})
     if (!user) return ctx.throw("not found", 404)
-    ctx.body = user.acct
+    const admin = user.acct
+    ctx.redirect("/@"+user.acct)
 })
 
 router.post("/update", async (ctx) => {

@@ -83,7 +83,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                 </form>
                 }
             </div></Jumbotron>
-            <p><a href="https://quesdon.toot.app/@Cutls@kirishima.cloud" className="mini">通報する(運営の質問箱)</a>{this.checkAdmin() && !user.isDeleted ? <Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button> : ""}</p>
+            <p><a href="/api/web/accounts/redirect/admin" className="mini">通報する(運営の質問箱)</a>{this.checkAdmin() && !user.isDeleted ? <Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button> : ""}</p>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
                         <span className="mini">これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。</span>
             { user.isDeleted ? <p>このユーザーの回答は表示できません。</p> : this.state.questions
