@@ -11,7 +11,7 @@ interface State {
     loading: boolean
 }
 
-export class PageMyFollowers extends React.Component<{}, State> {
+export class PageMyAdmin extends React.Component<{}, State> {
     constructor(props: any) {
         super(props)
         this.state = {
