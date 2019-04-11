@@ -91,6 +91,17 @@ router.post("/ban", async (ctx) => {
     if (!user) return ctx.throw("not found", 404)
     user.isDeleted = true
     await user.save()
+
+    await Question.update({
+        user: user,
+    }, {
+        $set: {
+            isDeleted: true,
+        },
+    }, {
+        multi: true,
+    })
+
     ctx.body = {status: "ok"}
 })
 router.get("/all_users", async (ctx) => {
