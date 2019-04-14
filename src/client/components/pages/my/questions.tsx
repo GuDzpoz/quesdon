@@ -29,7 +29,8 @@ export class PageMyQuestions extends React.Component<{}, State> {
         return <div>
             <Title>質問一覧 - マイページ</Title>
             <h1>質問一覧</h1>
-            <Link to="/my">マイページへ</Link>
+            <p><Link to="/my">マイページへ</Link></p>
+            <p>NSFWな内容を含む場合は<u>必ずNSFWにチェック</u>を入れてください。違反行為が目立つ場合凍結処置をする場合があります。</p>
             <div className="mt-3">
                 {loading
                     ? <Loading/>
