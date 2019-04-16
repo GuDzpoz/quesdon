@@ -27,6 +27,9 @@ router.get("/followers", async (ctx) => {
         return {max_id: undefined, accounts: []}
     }
     var at=ctx.session!.token;
+    if(!at){
+        at=user.accessToken
+    }
     var max_id ="";
     if(~at.indexOf("misskey_")){
         const instanceUrl = "https://" + user!.acct.split("@")[1]
