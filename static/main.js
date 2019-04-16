@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		time.innerText = moment(answer.answeredAt).format("YYYY-MM-DD HH:mm:ss")
 		subtitle.appendChild(time)
 
-		if (answer.questionUser) {
+		if (answer.questionAnon) {
 			const questionUserContainer = document.createElement("span")
 			questionUserContainer.className = "ml-2"
 			questionUserContainer.innerText = "質問者: "

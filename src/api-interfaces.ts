@@ -7,8 +7,8 @@ export interface APIQuestion {
     isNSFW: boolean
     likesCount: number
     isDeleted: boolean
-
     questionUser: APIUser | undefined
+    questionAnon: boolean
     answer: string | undefined
     answeredAt: string | undefined
 }

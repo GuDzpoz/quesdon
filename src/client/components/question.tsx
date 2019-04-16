@@ -59,6 +59,7 @@ export class Question extends React.Component<Props, State> {
     }
 
     renderQuestionUser() {
+        if (!this.props.questionAnon) return null
         if (!this.props.questionUser) return null
         return <span className="mr-2">
             質問者:&nbsp;

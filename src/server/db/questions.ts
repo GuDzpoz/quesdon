@@ -13,6 +13,7 @@ const schema = new mongoose.Schema({
     likesCount: {type: Number, default: 0},
     isNSFW: {type: Boolean, default: false},
     questionUser: {type: mongoose.Schema.Types.ObjectId, ref: "users", autopopulate: true},
+    questionAnon: {type: Boolean, default: false},
 }, {
     timestamps: true,
 })
@@ -36,7 +37,8 @@ export interface IQuestion extends mongoose.Document {
     isDeleted: boolean
     likesCount: number
     isNSFW: boolean
-    questionUser: IUser
+    questionUser: IUser,
+    questionAnon: boolean
 }
 
 export default mongoose.model("questions", schema) as mongoose.Model<IQuestion>
