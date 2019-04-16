@@ -34,7 +34,7 @@ router.get("/latest", async (ctx) => {
         answeredAt: {$ne: null},
         isDeleted: {$ne: true},
     }).limit(20).sort("-answeredAt")
-    console.log(questions)
+    console.log(questions.questionUser)
     ctx.body = questions
 })
 
