@@ -69,7 +69,7 @@ router.post("/:id/answer", async (ctx) => {
         ].join(""),
         visibility: ctx.request.body.fields.visibility,
     }
-    if (question.questionUser) {
+    if (question.questionAnon) {
         var questionUserAcct = "@" + question.questionUser.acct
         if (question.questionUser.hostName === "twitter.com") {
             questionUserAcct = "https://twitter.com/" + question.questionUser.acct.replace(/:.+/, "")

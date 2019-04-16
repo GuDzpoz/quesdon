@@ -12,6 +12,12 @@ export class PageIndex extends React.Component {
             <p>本家(quesdon.rinsuki.net)から質問を移行できる！</p>
             <details>
                 <summary>
+                    質問にログインが要るようになりました。
+                </summary>
+                スパム排除のための処置です。ご理解お願い致します。
+            </details>
+            <details>
+                <summary>
                     これはCutls Pによる運営です。開発者の運営ではありません。
                 </summary>
                 独自機能を除く開発者様へのお問い合わせは<a href="https://mstdn.rinsuki.net/@rinsuki">@rinsuki@mstdn.rinsuki.net</a>または<a href="https://mstdn.rinsuki.net/@quesdon">@quesdon@mstdn.rinsuki.net</a>までお願いします。

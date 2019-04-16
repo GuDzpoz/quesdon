@@ -64,7 +64,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                         {me && !user.allAnon && <div className="p-1">
                             <Checkbox name="noAnon" value="true">名乗る</Checkbox>
                         </div>}
-                        <div className="ml-auto">
+                        {me ? <div className="ml-auto">
                             <span className={"mr-3 " +
                                 (this.state.questionLength > QUESTION_TEXT_MAX_LENGTH ? "text-danger" : "")
                             }>
@@ -79,6 +79,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                                 質問{this.state.questionNow ? "中..." : "する"}
                             </Button>
                         </div>
+                        : "ログインしてください。"}
                     </div>
                 </form>
                 }
