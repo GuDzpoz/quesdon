@@ -97,6 +97,9 @@ router.post("/:id/answer", async (ctx) => {
         body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
     }
     var at=ctx.session!.token;
+    if(!at){
+        at=user.accessToken
+    }
     if(~at.indexOf("misskey_")){
         var vis=null;
         if(body.visibility=="public"){
