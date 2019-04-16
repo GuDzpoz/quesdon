@@ -277,6 +277,9 @@ const getAnswers = async (ctx: Koa.Context) => {
         isDeleted: {$ne: true},
     }).sort("-answeredAt")
     ctx.body = questions.map((question) => {
+        if(!question.questionAnon){
+            question.questionUser=null;
+        }
         question.user = user
         return question
     })

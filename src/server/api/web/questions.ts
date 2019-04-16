@@ -16,7 +16,15 @@ router.get("/", async (ctx) => {
         answeredAt: null,
         isDeleted: {$ne: true},
     })
-    ctx.body = JSON.stringify(questions)
+    var response=[]
+    for(var i=0;i<questions.length;i++){
+        var question=questions[i]
+        if(!question.questionAnon){
+            question.questionUser=null;
+        }
+        response.push(question)
+    }
+    ctx.body = JSON.stringify(response)
 })
 
 router.get("/count", async (ctx) => {
@@ -34,8 +42,15 @@ router.get("/latest", async (ctx) => {
         answeredAt: {$ne: null},
         isDeleted: {$ne: true},
     }).limit(20).sort("-answeredAt")
-    console.log(questions.questionUser)
-    ctx.body = questions
+    var response=[]
+    for(var i=0;i<questions.length;i++){
+        var question=questions[i]
+        if(!question.questionAnon){
+            question.questionUser=null;
+        }
+        response.push(question)
+    }
+    ctx.body = response
 })
 
 router.post("/:id/answer", async (ctx) => {
@@ -70,7 +85,7 @@ router.post("/:id/answer", async (ctx) => {
         ].join(""),
         visibility: ctx.request.body.fields.visibility,
     }
-    if (question.questionAnon) {
+    if (question.questionAnon && question.questionUser) {
         var questionUserAcct = "@" + question.questionUser.acct
         if (question.questionUser.hostName === "twitter.com") {
             questionUserAcct = "https://twitter.com/" + question.questionUser.acct.replace(/:.+/, "")
