@@ -93,7 +93,8 @@ router.post("/get_url", async (ctx) => {
                         "note-write",
                         "read:account",
 				        "write:account",
-				        "read:following"
+                        "read:following",
+                        "write:notes"
                     ],
                     callbackUrl:redirectUri
                 }),
