@@ -96,7 +96,7 @@ router.post("/:id/answer", async (ctx) => {
         body.status = "Q. " + question.question + "\n" + body.status
         body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
     }
-    var at=user!.accessToken;
+    var at=ctx.session!.token;
     if(~at.indexOf("misskey_")){
         var vis=null;
         if(body.visibility=="public"){
@@ -125,7 +125,7 @@ router.post("/:id/answer", async (ctx) => {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
-                "Authorization": "Bearer " + user!.accessToken,
+                "Authorization": "Bearer " + ctx.session!.token,
                 "Content-Type": "application/json",
             },
         })

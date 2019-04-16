@@ -26,7 +26,7 @@ router.get("/followers", async (ctx) => {
     if (user.hostName === "twitter.com") {
         return {max_id: undefined, accounts: []}
     }
-    var at=user!.accessToken;
+    var at=ctx.session!.token;
     var max_id ="";
     if(~at.indexOf("misskey_")){
         const instanceUrl = "https://" + user!.acct.split("@")[1]
@@ -56,7 +56,7 @@ router.get("/followers", async (ctx) => {
         const instanceUrl = "https://" + user!.acct.split("@")[1]
         const myInfo = await fetch(instanceUrl + "/api/v1/accounts/verify_credentials", {
             headers: {
-                Authorization: "Bearer " + user!.accessToken,
+                Authorization: "Bearer " + at,
             },
         }).then((r) => r.json())
         const param = ctx.query.max_id ? "&max_id=" + ctx.query.max_id : ""
@@ -64,7 +64,7 @@ router.get("/followers", async (ctx) => {
             `${instanceUrl}/api/v1/accounts/${myInfo.id}/followers?limit=80${param}`,
             {
                 headers: {
-                    Authorization: "Bearer " + user!.accessToken,
+                    Authorization: "Bearer " + at,
                 },
             },
         )   
