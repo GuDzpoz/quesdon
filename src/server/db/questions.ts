@@ -37,7 +37,7 @@ export interface IQuestion extends mongoose.Document {
     isDeleted: boolean
     likesCount: number
     isNSFW: boolean
-    questionUser: IUser,
+    questionUser: IUser | null,
     questionAnon: boolean
 }
 

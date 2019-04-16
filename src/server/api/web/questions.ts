@@ -16,7 +16,15 @@ router.get("/", async (ctx) => {
         answeredAt: null,
         isDeleted: {$ne: true},
     })
-    ctx.body = JSON.stringify(questions)
+    var response=[]
+    for(var i=0;i<questions.length;i++){
+        var question=questions[i]
+        if(!question.questionAnon){
+            question.questionUser=null;
+        }
+        response.push(question)
+    }
+    ctx.body = JSON.stringify(response)
 })
 
 router.get("/count", async (ctx) => {
@@ -30,11 +38,19 @@ router.get("/count", async (ctx) => {
 })
 
 router.get("/latest", async (ctx) => {
-    const questions = await Question.find({
+    let questions = await Question.find({
         answeredAt: {$ne: null},
         isDeleted: {$ne: true},
     }).limit(20).sort("-answeredAt")
-    ctx.body = questions
+    var response=[]
+    for(var i=0;i<questions.length;i++){
+        var question=questions[i]
+        if(!question.questionAnon){
+            question.questionUser=null;
+        }
+        response.push(question)
+    }
+    ctx.body = response
 })
 
 router.post("/:id/answer", async (ctx) => {
@@ -69,7 +85,7 @@ router.post("/:id/answer", async (ctx) => {
         ].join(""),
         visibility: ctx.request.body.fields.visibility,
     }
-    if (question.questionAnon) {
+    if (question.questionAnon && question.questionUser) {
         var questionUserAcct = "@" + question.questionUser.acct
         if (question.questionUser.hostName === "twitter.com") {
             questionUserAcct = "https://twitter.com/" + question.questionUser.acct.replace(/:.+/, "")
@@ -80,7 +96,7 @@ router.post("/:id/answer", async (ctx) => {
         body.status = "Q. " + question.question + "\n" + body.status
         body.spoiler_text = "⚠ この質問は回答者がNSFWであると申告しています #quesdon"
     }
-    var at=user!.accessToken;
+    var at=ctx.session!.token;
     if(~at.indexOf("misskey_")){
         var vis=null;
         if(body.visibility=="public"){
@@ -109,7 +125,7 @@ router.post("/:id/answer", async (ctx) => {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
-                "Authorization": "Bearer " + user!.accessToken,
+                "Authorization": "Bearer " + ctx.session!.token,
                 "Content-Type": "application/json",
             },
         })
