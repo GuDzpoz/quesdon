@@ -30,10 +30,11 @@ router.get("/count", async (ctx) => {
 })
 
 router.get("/latest", async (ctx) => {
-    const questions = await Question.find({
+    let questions = await Question.find({
         answeredAt: {$ne: null},
         isDeleted: {$ne: true},
     }).limit(20).sort("-answeredAt")
+    console.log(questions)
     ctx.body = questions
 })
 
