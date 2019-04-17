@@ -229,7 +229,7 @@ router.get("/redirect", async (ctx) => {
     if(user.acctLower==ADMIN){ user.isAdmin = true }
     await user.save()
     ctx.session!.user = user.id
-    //ctx.session!.token = profile.accessToken
+    ctx.session!.token = profile.accessToken
     ctx.redirect("/my")
 })
 
