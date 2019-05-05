@@ -60,6 +60,7 @@ export class PageUserIndex extends React.Component<Props, State> {
                         placeholder="質問する内容を入力"
                         onInput={this.questionInput.bind(this)}
                     />
+                    <p className="mini"><a href="https://toot.app/tos.html" target="_blank">利用規約</a>を必ずご確認ください。</p>
                     <div className="d-flex mt-1">
                         {me && !user.allAnon && <div className="p-1">
                             <Checkbox name="noAnon" value="true">名乗る</Checkbox>
