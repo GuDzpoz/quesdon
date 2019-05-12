@@ -29,12 +29,6 @@ export class PageIndex extends React.Component {
                 <li>自分宛ての新しい質問ができると<a href="https://mstdn.jp/@qtnotf">@qtnotf@mstdn.jp</a>よりDMで通知されます。要らない場合はこのアカウントをミュートしてください。</li>
                 <li>Misskeyでもログインできます。ログイン時に「Misskeyとしてログイン」にチェック！</li>
             </details>
-            <details>
-                <summary>
-                他のQuesdonに未回答の質問が残っていますか？
-                </summary>
-                その他Quesdonから未回答の質問をインポートしてくることができます！まずは回答をエクスポート！<a href="https://toot.app/export/" target="_blank">エクスポートの方法</a>
-            </details>
             <p>{me ? <Link to="/my">マイページ</Link> : <Link to="/login">ログイン</Link>}</p>
             <PageLatest />
         </div>

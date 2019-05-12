@@ -208,10 +208,9 @@ router.post("/:acct/question", async (ctx) => {
     const question = new Question()
     question.question = questionString
     question.user = user
-    if (ctx.request.body.fields.noAnon) {
+    if (ctx.request.body.fields.noAnon || user.allAnon) {
         question.questionAnon = true
     }
-    if (user.allAnon) return ctx.throw("all anon", 400)
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const questionUser = await User.findById(ctx.session!.user)
     if (!questionUser) return ctx.throw("not found", 404)
