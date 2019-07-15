@@ -281,7 +281,7 @@ router.post("/:id/nsfw/send", async (ctx) => {
     if(question.questionUser){
         const questionUser = question.questionUser
         const user = question.user
-        const url = BASE_URL + "/" +user.acct + "/questions/" + question._id
+        const url = BASE_URL + "/@" +user.acct + "/questions/" + question._id
         fetch("https://" + TOOT_ORIGIN + "/api/v1/statuses", {
             method: "POST",
             body: JSON.stringify({

@@ -38,7 +38,7 @@ export class Question extends React.Component<Props, State> {
                         {moment(this.props.answeredAt).format("YYYY-MM-DD HH:mm:ss")}
                     </Link>}
                     {this.renderQuestionUser()}
-                    {this.nsfwAdd()}
+                    {this.props.answeredAt ? this.nsfwAdd() : null }
                 </CardSubtitle>
                 {this.props.answeredAt ? this.renderAnswer() : this.renderAnswerForm()}
             </CardBody>
@@ -123,6 +123,7 @@ export class Question extends React.Component<Props, State> {
     nsfwAdd() {
         if (!me) return null
         if (!me.isAdmin) return null
+        if(this.state.nsfwGuard) return null
         return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
     }
 
