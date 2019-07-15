@@ -10,7 +10,6 @@ export class PageIndex extends React.Component {
             <title>Quesdon(toot.app)</title>
             <h1>Quesdon(toot.app)</h1>
             <p>ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonで使えるやつです。Misskeyにも勝手に対応。</p>
-            <p>本家(quesdon.rinsuki.net)から質問を移行できる！</p>
             <details>
                 <summary>
                     これはCutls Pによる運営です。開発者の運営ではありません。
