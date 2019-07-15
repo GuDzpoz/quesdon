@@ -13,7 +13,9 @@ Cutlsが勝手にいじったもの[Quesdon(toot.app)](https://quesdon.toot.app)
 * DMで質問の通知が来る。`TOOT_ORIGIN`にインスタンス名を、`TOOT_TOKEN`にアクセストークンを渡して起動する。オプトアウト方法等はない(アカウントをミュートしたら終わり)。
 * Misskeyでログインできる。投稿もできる。
 * 未回答の質問をインポートする(ブックマークレットと合わせて公開)
-* `ADMIN`に小文字にしたacct(cutls@kirishima.cloudなど)を指定してAdminを指定。ユーザーを凍結できる。
+* `ADMIN`に小文字にしたacct(cutls@cutls.comなど)を指定してAdminを指定。
+  + Adminはユーザーを凍結することができます。(WebUIあり)
+  + Adminは回答をNSFWに設定することができます。(WebUIあり)
 
 ## how to run
 
