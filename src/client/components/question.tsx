@@ -121,7 +121,8 @@ export class Question extends React.Component<Props, State> {
     }
 
     nsfwAdd() {
-        if (me.isAdmin) return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
+        if (!me.isAdmin) return null
+        return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
     }
 
     onAddNSFW(e: any) {
