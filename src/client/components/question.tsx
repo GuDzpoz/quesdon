@@ -6,6 +6,7 @@ import { APIQuestion } from "../../api-interfaces"
 import { apiFetch } from "../api-fetch"
 import { Checkbox } from "./common/checkbox"
 import { UserLink } from "./userLink"
+import { me } from "../initial-state"
 
 interface Props extends APIQuestion {
     hideAnswerUser?: boolean | undefined
@@ -37,6 +38,7 @@ export class Question extends React.Component<Props, State> {
                         {moment(this.props.answeredAt).format("YYYY-MM-DD HH:mm:ss")}
                     </Link>}
                     {this.renderQuestionUser()}
+                    {this.props.answeredAt ? this.nsfwAdd() : null }
                 </CardSubtitle>
                 {this.props.answeredAt ? this.renderAnswer() : this.renderAnswerForm()}
             </CardBody>
@@ -116,5 +118,33 @@ export class Question extends React.Component<Props, State> {
 
     nsfwGuardClick() {
         this.setState({nsfwGuard: false})
+    }
+
+    nsfwAdd() {
+        if (!me) return null
+        if (!me.isAdmin) return null
+        if(this.props.isNSFW) return null
+        return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
+    }
+
+    onAddNSFW(e: any) {
+        if (confirm("NSFWに設定しますか？")) {
+            apiFetch("/api/web/questions/" + this.props._id + "/nsfw/set", {
+                method: "POST",
+            }).then((r) => r.json()).then((r) => {
+                if (confirm("警告文を送りますか？")) {
+                    apiFetch("/api/web/questions/" + this.props._id + "/nsfw/send", {
+                        method: "POST",
+                    }).then((r) => r.json()).then((r) => {
+                        alert("送信しました。")
+                        location.reload()
+                    })
+                }else {
+                    alert("送信されませんでしたが、NSFWに設定しました。")
+                    location.reload() 
+                }
+            })
+        }
+        
     }
 }
