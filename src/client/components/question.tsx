@@ -127,11 +127,11 @@ export class Question extends React.Component<Props, State> {
     }
 
     onAddNSFW(e: any) {
-        if (!confirm("NSFWに設定しますか？")) {
+        if (confirm("NSFWに設定しますか？")) {
             apiFetch("/api/web/questions/" + this.props._id + "/nsfw/set", {
                 method: "POST",
             }).then((r) => r.json()).then((r) => {
-                if (!confirm("警告文を送りますか？")) {
+                if (confirm("警告文を送りますか？")) {
                     apiFetch("/api/web/questions/" + this.props._id + "/nsfw/send", {
                         method: "POST",
                     }).then((r) => r.json()).then((r) => {
