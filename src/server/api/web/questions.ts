@@ -3,7 +3,7 @@ import * as fs from "fs"
 import * as Router from "koa-router"
 import * as mongoose from "mongoose"
 import fetch from "node-fetch"
-import { BASE_URL, ADMIN } from "../../config"
+import { BASE_URL, ADMIN, TOOT_ORIGIN, TOOT_TOKEN} from "../../config"
 import { Question, QuestionLike, User } from "../../db/index"
 import { questionLogger } from "../../utils/questionLog"
 
@@ -258,6 +258,57 @@ ${JSON.stringify(user, null, 4)}
     )
     archive.finalize()
     await p
+})
+
+router.post("/:id/nsfw/set", async (ctx) => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const me = await User.findById(ctx.session!.user)
+    if (!me) return ctx.throw("not found", 404)
+    if (me.acctLower != ADMIN) return ctx.throw("not admin", 403)
+    const question = await Question.findById(ctx.params.id)
+    if (!question) return ctx.throw("not found", 404)
+    question.isNSFW = true
+    await question.save()
+    ctx.body = {status: "ok"}
+})
+router.post("/:id/nsfw/send", async (ctx) => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const me = await User.findById(ctx.session!.user)
+    if (!me) return ctx.throw("not found", 404)
+    if (me.acctLower != ADMIN) return ctx.throw("not admin", 403)
+    const question = await Question.findById(ctx.params.id)
+    if (!question) return ctx.throw("not found", 404)
+    if(question.questionUser){
+        const questionUser = question.questionUser
+        const user = question.user
+        const url = BASE_URL + "/" +user.acct + "/questions/" + question._id
+        fetch("https://" + TOOT_ORIGIN + "/api/v1/statuses", {
+            method: "POST",
+            body: JSON.stringify({
+                visibility: "direct",
+                status: "@"+questionUser.acctLower+" 質問が利用規約に反するためNSFWに設定されました。次回以降凍結される可能性がありますのでご注意ください。\n該当の質問" + url,
+            }),
+            headers: {
+            "Authorization": "Bearer " + TOOT_TOKEN,
+            "Content-Type": "application/json",
+            }
+        })
+        fetch("https://" + TOOT_ORIGIN + "/api/v1/statuses", {
+            method: "POST",
+            body: JSON.stringify({
+                visibility: "direct",
+                status: "@"+user.acctLower+" 質問が利用規約に反するためNSFWに設定されました。次回以降凍結される可能性がありますのでご注意ください。\n該当の質問" + url,
+            }),
+            headers: {
+            "Authorization": "Bearer " + TOOT_TOKEN,
+            "Content-Type": "application/json",
+            }
+        })
+        ctx.body = {status: "ok"}
+    }else{
+        ctx.body = {status: "error"}
+    }
+    
 })
 
 export default router
