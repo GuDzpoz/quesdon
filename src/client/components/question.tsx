@@ -24,7 +24,7 @@ export class Question extends React.Component<Props, State> {
         this.state = {
             isNotEmpty: false,
             nsfwGuard: this.props.isNSFW && !this.props.noNsfwGuard,
-        }
+        } 
     }
     render() {
         return <Card className="mb-3">
