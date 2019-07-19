@@ -73,6 +73,7 @@ export class Question extends React.Component<Props, State> {
     renderQuestionUserForAdmin() {
         if (!me) return null
         if (!me.isAdmin) return null
+        if (!this.props.questionUser) return null
         return <span className="mr-2">
             質問者:&nbsp;
             <UserLink {...this.props.questionUser}/>
@@ -133,7 +134,7 @@ export class Question extends React.Component<Props, State> {
     nsfwAdd() {
         if (!me) return null
         if (!me.isAdmin) return null
-        if(this.props.isNSFW) return null
+        if (this.props.isNSFW) return null
         return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
     }
 
