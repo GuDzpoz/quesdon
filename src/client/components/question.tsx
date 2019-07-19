@@ -61,6 +61,15 @@ export class Question extends React.Component<Props, State> {
         </span>
     }
 
+    renderQuestionUser() {
+        if (!this.props.questionAnon) return null
+        if (!this.props.questionUser) return null
+        return <span className="mr-2">
+            質問者:&nbsp;
+            <UserLink {...this.props.questionUser}/>
+        </span>
+    }
+
     renderQuestionUserForAdmin() {
         if (!me) return null
         if (!me.isAdmin) return null
@@ -69,7 +78,7 @@ export class Question extends React.Component<Props, State> {
             <UserLink {...this.props.questionUser}/>
         </span>
     }
-    
+
     renderAnswer() {
         return <CardText className="question-text">{this.props.answer}</CardText>
     }
