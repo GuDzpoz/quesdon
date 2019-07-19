@@ -124,7 +124,10 @@ export class Question extends React.Component<Props, State> {
         if (!me) return null
         if (!me.isAdmin) return null
         if(this.props.isNSFW) return null
-        return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
+        return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a><span className="mr-2">
+            質問者:&nbsp;
+            <UserLink {...this.props.questionUser}/>
+        </span>
     }
 
     onAddNSFW(e: any) {
