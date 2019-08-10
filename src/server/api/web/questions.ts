@@ -38,6 +38,14 @@ router.get("/count", async (ctx) => {
 })
 
 router.get("/latest", async (ctx) => {
+    if (ctx.session!.user){
+        //Logined
+        const me = await User.findById(ctx.session!.user)
+        if (!me) return ctx.throw("not found", 404)
+        var mine = me.acctLower
+    } else {
+        var mine = ""
+    }
     let questions = await Question.find({
         answeredAt: {$ne: null},
         isDeleted: {$ne: true},
@@ -45,7 +53,7 @@ router.get("/latest", async (ctx) => {
     var response=[]
     for(var i=0;i<questions.length;i++){
         var question=questions[i]
-        if(!question.questionAnon){
+        if(!question.questionAnon && mine != ADMIN){
             question.questionUser=null;
         }
         response.push(question)

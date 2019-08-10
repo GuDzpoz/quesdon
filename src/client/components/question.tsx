@@ -24,7 +24,7 @@ export class Question extends React.Component<Props, State> {
         this.state = {
             isNotEmpty: false,
             nsfwGuard: this.props.isNSFW && !this.props.noNsfwGuard,
-        }
+        } 
     }
     render() {
         return <Card className="mb-3">
@@ -73,6 +73,7 @@ export class Question extends React.Component<Props, State> {
     renderQuestionUserForAdmin() {
         if (!me) return null
         if (!me.isAdmin) return null
+        if (!this.props.questionUser) return null
         return <span className="mr-2">
             質問者:&nbsp;
             <UserLink {...this.props.questionUser}/>
@@ -133,13 +134,8 @@ export class Question extends React.Component<Props, State> {
     nsfwAdd() {
         if (!me) return null
         if (!me.isAdmin) return null
-        if(this.props.isNSFW) return null
-        return 
-        <span className="mr-2">
-            <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
-            質問者:&nbsp;
-            <UserLink {...this.props.questionUser}/>
-        </span>
+        if (this.props.isNSFW) return null
+        return <a href="javascript://" onClick={this.onAddNSFW.bind(this)}>NSFWにする</a>
     }
 
     onAddNSFW(e: any) {
