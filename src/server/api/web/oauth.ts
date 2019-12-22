@@ -28,12 +28,14 @@ router.post("/get_url", async (ctx) => {
                     description: "",
                     permission: [
                         "account-read",
-                        "account-write",
                         "account/read",
                         "account/write",
                         "following-read",
                         "note-read",
                         "note-write",
+                        "read:account",
+                        "read:following",
+                        "write:notes"
                     ],
                     callbackUrl:redirectUri
                 }),
