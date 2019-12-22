@@ -67,7 +67,7 @@ router.get("/get_reported", async (ctx) => {
     if (!me) return ctx.throw("not found", 404)
     if (me.acctLower != ADMIN) return ctx.throw("not admin", 403)
     let questions = await Question.find({
-        isReported: {$ne: false},
+        isReported: true,
     }).limit(20).sort("-createdAt")
     var response=[]
     for(var i=0;i<questions.length;i++){
