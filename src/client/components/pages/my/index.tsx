@@ -20,6 +20,7 @@ export class PageMyIndex extends React.Component {
                 <Link to="/my/followers"><ListGroupItem className="justify-content-between">Quesdonを利用しているフォロワー一覧</ListGroupItem></Link>
                 <Link to="/my/settings"><ListGroupItem className="justify-content-between">設定</ListGroupItem></Link>
                 { me.isAdmin ? <Link to="/my/admin"><ListGroupItem className="justify-content-between">管理ページ</ListGroupItem></Link> : "" }
+                { me.isAdmin ? <Link to="/my/reported"><ListGroupItem className="justify-content-between">通報された質問</ListGroupItem></Link> : "" }
             </ListGroup>
             <p></p>
             <ul>

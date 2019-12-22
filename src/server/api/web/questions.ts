@@ -61,6 +61,22 @@ router.get("/latest", async (ctx) => {
     ctx.body = response
 })
 
+router.get("/get_reported", async (ctx) => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const me = await User.findById(ctx.session!.user)
+    if (!me) return ctx.throw("not found", 404)
+    if (me.acctLower != ADMIN) return ctx.throw("not admin", 403)
+    let questions = await Question.find({
+        isReported: {$ne: false},
+    }).limit(20).sort("-createdAt")
+    var response=[]
+    for(var i=0;i<questions.length;i++){
+        var question=questions[i]
+        response.push(question)
+    }
+    ctx.body = response
+})
+
 router.post("/:id/answer", async (ctx) => {
     if (!ctx.session!.user) return ctx.throw("please login", 403)
     const question = await Question.findById(ctx.params.id)
@@ -154,6 +170,32 @@ router.post("/:id/delete", async (ctx) => {
     question.isDeleted = true
     await question.save()
     ctx.body = {status: "ok"}
+})
+
+router.post("/:id/report", async (ctx) => {
+    if (!ctx.session!.user) return ctx.throw("please login", 403)
+    const question = await Question.findById(ctx.params.id)
+    if (!question) return ctx.throw("not found", 404)
+    // tslint:disable-next-line:triple-equals
+    if (question.user._id != ctx.session!.user) return ctx.throw("not found", 404)
+    question.isDeleted = true
+    question.isReported = true
+    const body = JSON.parse(ctx.request.body)
+    question.answer = body.report
+    question.answeredAt = new Date()
+    await question.save()
+    ctx.body = {status: "ok"}
+    fetch("https://" + TOOT_ORIGIN + "/api/v1/statuses", {
+        method: "POST",
+        body: JSON.stringify({
+            visibility: "direct",
+            status: '@' + ADMIN + ' 通報された質問があります',
+        }),
+        headers: {
+        "Authorization": "Bearer " + TOOT_TOKEN,
+        "Content-Type": "application/json",
+        }
+    })
 })
 
 router.post("/:id/like", async (ctx) => {

@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
     answer: String,
     answeredAt: Date,
     isDeleted: {type: Boolean, default: false},
+    isReported: {type: Boolean, default: false},
     likesCount: {type: Number, default: 0},
     isNSFW: {type: Boolean, default: false},
     questionUser: {type: mongoose.Schema.Types.ObjectId, ref: "users", autopopulate: true},
@@ -35,6 +36,7 @@ export interface IQuestion extends mongoose.Document {
     answer: string | null
     answeredAt: Date | null
     isDeleted: boolean
+    isReported: boolean
     likesCount: number
     isNSFW: boolean
     questionUser: IUser | null,

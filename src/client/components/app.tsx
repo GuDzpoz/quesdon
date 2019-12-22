@@ -12,6 +12,7 @@ import { PageMyIndex } from "./pages/my/index"
 import { PageMyQuestions } from "./pages/my/questions"
 import { PageMySettings } from "./pages/my/settings"
 import { PageMyAdmin } from "./pages/my/admin"
+import { PageMyReported } from "./pages/my/reported"
 import { PageNotFound } from "./pages/notfound"
 import { PageUserIndex } from "./pages/user/index"
 import { PageUserQuestion } from "./pages/user/question"
@@ -33,6 +34,7 @@ export class App extends React.Component {
                     <Route exact path="/my/followers" component={PageMyFollowers}/>
                     <Route exact path="/my/settings" component={PageMySettings}/>
                     <Route exact path="/my/admin" component={PageMyAdmin}/>
+                    <Route exact path="/my/reported" component={PageMyReported}/>
                     <Route exact path="/@:user_id" render={(props: RouteComponentProps<{user_id: string}>) => {
                         const userId = props.match.params.user_id
                         return <PageUserIndex key={userId} userId={userId}/>

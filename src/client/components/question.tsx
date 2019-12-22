@@ -98,7 +98,8 @@ export class Question extends React.Component<Props, State> {
                 <option value="no">投稿しない</option>
             </Input>
             <Checkbox name="isNSFW" value="true" className="ml-2">NSFW</Checkbox>
-            <Button type="button" color="danger" style={{float: "right"}} onClick={this.onDelete.bind(this)}>削除</Button>
+            <Button type="button" color="warning" style={{float: "right"}} onClick={this.onDelete.bind(this)}>削除</Button>
+            <Button type="button" color="danger" style={{float: "right"}} onClick={this.onReport.bind(this)}>削除して通報</Button>
         </form>
     }
 
@@ -123,6 +124,18 @@ export class Question extends React.Component<Props, State> {
             method: "POST",
         }).then((r) => r.json()).then((r) => {
             alert("削除しました")
+            location.reload()
+        })
+    }
+
+    onReport(e: any) {
+        const det = prompt("質問を削除して通報します。\n通報された質問は管理者以外から見えなくなります。\n以下に通報の詳細を記入できます。")
+        if (!det) return
+        apiFetch("/api/web/questions/" + this.props._id + "/report", {
+            method: "POST",
+            body: JSON.stringify( {report: det }),
+        }).then((r) => r.json()).then((r) => {
+            alert("削除し、通報しました")
             location.reload()
         })
     }
