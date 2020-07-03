@@ -55,12 +55,12 @@ export class PageUserIndex extends React.Component<Props, State> {
                 <p>{desc}</p>
                 { user.isDeleted ? <p>このユーザーは凍結されています。管理人までお問い合わせください。</p> : user.stopNewQuestion ? <p>このユーザーは新しい質問を受け付けていません</p> :
                 <form action="javascript://" onSubmit={this.questionSubmit.bind(this)}>
-                {user.isAdmin ? "通報するときは、quesdon.toot.appからはじまるそのユーザーのアドレスと理由を入力し、「名乗る」にチェックを入れてください。" : ""}
+                {user.isAdmin ? "通報するときは、quesdon.TheDeskからはじまるそのユーザーのアドレスと理由を入力し、「名乗る」にチェックを入れてください。" : ""}
                     <Input type="textarea" name="question"
                         placeholder="質問する内容を入力"
                         onInput={this.questionInput.bind(this)}
                     />
-                    <p className="mini"><a href="https://toot.app/tos.html" target="_blank">利用規約</a>を必ずご確認ください。</p>
+                    <p className="mini"><a href="https://toot.app.thedesk.top/tos.html" target="_blank">利用規約</a>を必ずご確認ください。</p>
                     <div className="d-flex mt-1">
                         {me && !user.allAnon && <div className="p-1">
                             <Checkbox name="noAnon" value="true">名乗る</Checkbox>
@@ -87,11 +87,15 @@ export class PageUserIndex extends React.Component<Props, State> {
             </div></Jumbotron>
             <p><a href="/api/web/accounts/redirect/admin" className="mini">通報する(運営の質問箱)</a>{this.checkAdmin() && !user.isDeleted ? <Button color="danger" onClick={this.ban.bind(this)}>凍結する</Button> : ""}</p>
                         <h2>回答&nbsp;{this.state.questions && <Badge pill>{this.state.questions.length}</Badge>}</h2>
-                        <span className="mini">これはQuesdon(toot.app)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。</span>
+                        <span className="mini">これはQuesdon(TheDesk)であるため、他のQuesdon(quesdon.rinsuki.netなど)上の質問については表示されません。</span>
             { user.isDeleted ? <p>このユーザーの回答は表示できません。</p> : this.state.questions
             ?   <div>
                     {this.state.questions.map((question) =>
-                        <Question {...question} hideAnswerUser key={question._id}/>,
+                        { me.isAdmin ? 
+                            <Question {...question} key={question._id}/>
+                        : 
+                            <Question {...question} hideAnswerUser key={question._id}/>
+                        }
                     )}
                 </div>
             :   <Loading />

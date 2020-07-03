@@ -30,7 +30,7 @@ export class PageMyQuestions extends React.Component<{}, State> {
             <Title>質問一覧 - マイページ</Title>
             <h1>質問一覧</h1>
             <p><Link to="/my">マイページへ</Link></p>
-            <p><a href="https://toot.app/tos.html" target="_blank">利用規約</a>に沿っていない投稿はすぐに削除してください。また、利用規約に沿っていない質問をしないでください。</p>
+            <p><a href="https://toot.app.thedesk.top/tos.html" target="_blank">利用規約</a>に沿っていない投稿はすぐに削除してください。また、利用規約に沿っていない質問をしないでください。</p>
             <p>違反ユーザーは即凍結処置をさせていただきます。</p>
             <div className="mt-3">
                 {loading

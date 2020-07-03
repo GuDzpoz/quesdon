@@ -6,7 +6,7 @@ LICENSE: [AGPL 3.0](LICENSE)
 
 ## 魔改造アリ
 
-Cutlsが勝手にいじったもの[Quesdon(toot.app)](https://quesdon.toot.app)
+Cutlsが勝手にいじったもの[Quesdon(TheDesk)](https://quesdon.thedesk.top)
 
 * DMで質問の通知が来ます。`TOOT_ORIGIN`にインスタンス名を、`TOOT_TOKEN`にアクセストークンを渡して起動します。オプトアウト方法等はありません(アカウントをミュートしたら終わり)。
 * Misskeyでログインできます。投稿もOK。

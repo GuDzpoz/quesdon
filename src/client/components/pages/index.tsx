@@ -7,8 +7,8 @@ import { Alert } from "reactstrap"
 export class PageIndex extends React.Component {
     render() {
         return <div>
-            <title>Quesdon(toot.app)</title>
-            <h1>Quesdon(toot.app)</h1>
+            <title>Quesdon(TheDesk)</title>
+            <h1>Quesdon(TheDesk)</h1>
             <p>ザ・インタビューズとかaskfmとかそんなかんじのやつのMastodonで使えるやつです。Misskeyにも勝手に対応。</p>
             <details>
                 <summary>

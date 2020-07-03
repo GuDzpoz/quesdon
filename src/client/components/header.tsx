@@ -20,7 +20,7 @@ export class Header extends React.Component<{}, State> {
     }
     render() {
         return <Navbar light expand="md" color="light"><Container>
-            <NavbarBrand to="/">Quesdon(toot.app)</NavbarBrand>
+            <NavbarBrand to="/">Quesdon(TheDesk)</NavbarBrand>
             <NavbarToggler onClick={this.toggle.bind(this)} />
             <Collapse navbar isOpen={this.state.isOpen}>
                 <Nav className="mr-auto" navbar>

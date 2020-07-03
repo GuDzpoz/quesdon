@@ -24,7 +24,7 @@ router.post("/get_url", async (ctx) => {
             const createApp = await fetch("https://" + hostName + "/api/app/create", {
                 method: "POST",
                 body: JSON.stringify({
-                    name: "Quesdon(toot.app)",
+                    name: "Quesdon(TheDesk)",
                     description: "",
                     permission: [
                         "account-read",
@@ -62,7 +62,7 @@ router.post("/get_url", async (ctx) => {
             const res = await fetch("https://" + hostName + "/api/v1/apps", {
                 method: "POST",
                 body: JSON.stringify({
-                    client_name: "Quesdon(toot.app)",
+                    client_name: "Quesdon(TheDesk)",
                     redirect_uris: redirectUri,
                     scopes: "read write",
                     website: BASE_URL,
@@ -83,7 +83,7 @@ router.post("/get_url", async (ctx) => {
             const createApp = await fetch("https://" + hostName + "/api/app/create", {
                 method: "POST",
                 body: JSON.stringify({
-                    name: "Quesdon(toot.app)",
+                    name: "Quesdon(TheDesk)",
                     description: "",
                     permission: [
                         "account-read",
