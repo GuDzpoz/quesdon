@@ -91,11 +91,7 @@ export class PageUserIndex extends React.Component<Props, State> {
             { user.isDeleted ? <p>このユーザーの回答は表示できません。</p> : this.state.questions
             ?   <div>
                     {this.state.questions.map((question) =>
-                        { me.isAdmin ? 
-                            <Question {...question} key={question._id}/>
-                        : 
-                            <Question {...question} hideAnswerUser key={question._id}/>
-                        }
+                        <Question {...question} key={question._id}/>
                     )}
                 </div>
             :   <Loading />
